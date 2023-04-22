@@ -11,6 +11,8 @@
 		083607E929F42AA600B75756 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607E829F42AA600B75756 /* ContentView.swift */; };
 		083607EB29F42AA900B75756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083607EA29F42AA900B75756 /* Assets.xcassets */; };
 		083607EE29F42AA900B75756 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083607ED29F42AA900B75756 /* Preview Assets.xcassets */; };
+		083607F529F42B1800B75756 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607F429F42B1800B75756 /* Colors.swift */; };
+		083607F729F42D4E00B75756 /* Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607F629F42D4E00B75756 /* Days.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		083607E829F42AA600B75756 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		083607EA29F42AA900B75756 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		083607ED29F42AA900B75756 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		083607F429F42B1800B75756 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		083607F629F42D4E00B75756 /* Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Days.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				083607E629F42AA600B75756 /* MuscleMateApp.swift */,
 				083607E829F42AA600B75756 /* ContentView.swift */,
+				083607F629F42D4E00B75756 /* Days.swift */,
+				083607F429F42B1800B75756 /* Colors.swift */,
 				083607EA29F42AA900B75756 /* Assets.xcassets */,
 				083607EC29F42AA900B75756 /* Preview Content */,
 			);
@@ -138,6 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				083607E929F42AA600B75756 /* ContentView.swift in Sources */,
+				083607F529F42B1800B75756 /* Colors.swift in Sources */,
+				083607F729F42D4E00B75756 /* Days.swift in Sources */,
 				083607E729F42AA600B75756 /* MuscleMateApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
