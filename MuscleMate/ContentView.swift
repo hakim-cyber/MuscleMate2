@@ -16,56 +16,71 @@ struct ContentView: View {
                      Day(id: 4, muscles: [Muscle]())]
     var body: some View {
         NavigationView{
-            VStack(alignment: .leading){
-                ForEach(daysOfWeek) { day in
-                    
-                    NavigationLink{
+            ScrollView{
+                VStack(alignment: .leading){
+                    ForEach(daysOfWeek) { day in
                         
-                    }label: {
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.openGreen)
-                            .frame(width: 350,height: 100)
-                            .overlay(
-                                VStack{
-                                    Spacer()
-                                    HStack{
-                                        Text("Day \(day.id)")
-                                            .foregroundColor(.black)
-                                            .font(.largeTitle)
-                                            .bold()
+                        NavigationLink(destination:DayView(day: day).preferredColorScheme(.dark) ){
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.openGreen)
+                                .frame(width: 350,height: 150)
+                                .overlay(
+                                    VStack{
                                         Spacer()
-                                        VStack{
-                                            ForEach(day.muscles){muscle in
-                                                Text("\(muscle.muscle)")
-                                                    .font(.headline)
-                                                    .foregroundColor(.black)
+                                        HStack{
+                                            Text("Day \(day.id)")
+                                                .foregroundColor(.black)
+                                                .font(.largeTitle)
+                                                .bold()
+                                            Spacer()
+                                            VStack{
+                                                ForEach(day.muscles){muscle in
+                                                    Text("\(muscle.muscle)")
+                                                        .font(.headline)
+                                                        .foregroundColor(.black)
+                                                }
                                             }
+                                            .padding()
+                                           
                                         }
                                         Spacer()
                                     }
-                                    Spacer()
-                                }
-                                    .padding()
-                            )
-                    }
+                                        .padding()
+                                )
+                        }
                         
+                    }
                 }
+                .padding(40)
             }
-            .toolbar{
-                Button{
-                    // Add day view
-                }label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(Color.openGreen)
-                }
-            }
+            .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button {
+                                        
+                                    }label:{
+                                        Image(systemName: "plus")
+                                            .foregroundColor(Color.openGreen)
+                                            .font(.headline)
+                                            .padding()
+                                    }
+                                }
+                                
+                            ToolbarItem(placement: .principal) {
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 20))
+                                        
+                                }
+                            }
+                           
             
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
     }
 }

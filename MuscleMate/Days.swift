@@ -22,7 +22,8 @@ struct Muscle: Codable,Identifiable{
     
 }
 
-struct Exercise:Codable{
+struct Exercise:Codable,Identifiable{
+    var id = UUID()
     let name:String
     let repeatsCount:Int
     let setsCount:Int
