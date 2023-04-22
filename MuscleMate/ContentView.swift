@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct ContentView: View {
-    let daysOfWeek = [Day(id: 1, muscles: [Muscle](arrayLiteral: Muscle(muscle: "Back", exercises: [Exercise]()), Muscle(muscle: "Back", exercises: [Exercise]())
+    let daysOfWeek = [Day(id: 1, muscles: [Muscle](arrayLiteral: Muscle(muscle: "Back", exercises: [Exercise]()), Muscle(muscle: "Back", exercises: [Exercise(name: "H", repeatsCount: 5, setsCount: 15)])
                                                   )),
                      Day(id: 2, muscles: [Muscle]()),
                      Day(id: 3, muscles: [Muscle]()),
@@ -26,24 +26,23 @@ struct ContentView: View {
                                 .frame(width: 350,height: 150)
                                 .overlay(
                                     VStack{
-                                        Spacer()
+                                        
                                         HStack{
+                                            Spacer()
                                             Text("Day \(day.id)")
                                                 .foregroundColor(.black)
                                                 .font(.largeTitle)
                                                 .bold()
                                             Spacer()
-                                            VStack{
-                                                ForEach(day.muscles){muscle in
-                                                    Text("\(muscle.muscle)")
-                                                        .font(.headline)
-                                                        .foregroundColor(.black)
-                                                }
-                                            }
-                                            .padding()
-                                           
+                                            Image(systemName: "arrow.right")
+                                                .foregroundColor(.black)
+                                              
+                                        
                                         }
-                                        Spacer()
+                                 Spacer()
+                                        Text("\(calculateCountOfExcercises(day:day)) Excersices")
+                                            .foregroundColor(.black.opacity(0.9))
+                                            
                                     }
                                         .padding()
                                 )
@@ -74,6 +73,16 @@ struct ContentView: View {
                            
             
         }
+    }
+    
+    func calculateCountOfExcercises(day:Day)->Int{
+        var count = 0
+        
+        for muscle in day.muscles{
+            count += muscle.exercises.count
+        }
+        return count
+        
     }
     
 }
