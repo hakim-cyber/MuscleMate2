@@ -50,6 +50,7 @@ struct ContentView: View {
                         }
                         
                     }
+                    .onDelete(perform: remove)
                 }
                 .padding(40)
             }
@@ -58,6 +59,9 @@ struct ContentView: View {
                     .preferredColorScheme(.dark)
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                       EditButton()
+                    }
                             ToolbarItem(placement: .navigationBarTrailing) {
                                     Button {
                                         showAdd = true
@@ -104,6 +108,10 @@ struct ContentView: View {
         if let encoded = try? JSONEncoder().encode(daysOfWeek){
             UserDefaults.standard.set(encoded, forKey: Day.saveKey)
         }
+    }
+    func remove(at offset:IndexSet){
+        daysOfWeek.remove(atOffsets:  offset)
+       save()
     }
 }
 

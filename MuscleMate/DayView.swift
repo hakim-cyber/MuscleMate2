@@ -11,12 +11,72 @@ struct DayView: View {
     @Binding var day:Day
     var change: (() -> Void)? = nil
     @State var days = [Day]()
+    
+    @State var availibleMuscles = ["abdominals",
+                                   "abductors",
+                                   "adductors",
+                                  "biceps",
+                                   "calves",
+                                   "chest",
+                                   "forearms",
+                                   "glutes",
+                                   "hamstrings",
+                                   "lats",
+                                   "lower_back",
+                                   "middle_back",
+                                   "neck",
+                                   "quadriceps",
+                                   "traps",
+                                   "triceps"]
+    @State var pickedMuscle = "glutes"
+    
+    @State var showadding =  false
     var body: some View {
-        
+        VStack{
+            if showadding{
+                HStack{
+                    
+                    Picker("",selection: $pickedMuscle){
+                        
+                        ForEach(availibleMuscles,id: \.self) { muscle in
+                            Text(muscle.uppercased())
+                                .foregroundColor(Color.openGreen)
+                        }
+                        
+                    }
+                    
+                    .labelsHidden()
+                    .padding()
+                    
+                    Spacer()
+                    Text("\(pickedMuscle.uppercased())")
+                        .font(.largeTitle)
+                        .padding()
+                }
+                .foregroundColor(Color.openGreen)
+                HStack{
+                    Spacer()
+                    Button("Add Muscle"){
+                        let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [Exercise]())
+                        day.muscles.append(muscle)
+                        self.change?()
+                        let newAvailible =   availibleMuscles.filter{$0 != pickedMuscle}
+                        availibleMuscles = newAvailible
+                        
+                    }
+                    Spacer()
+                }
+            }
+            
             ScrollView{
+                
+                
+                
                 VStack(alignment: .leading){
-                    ForEach(day.muscles){muscle in
-                        NavigationLink(destination:ExcerciseView(muscle: muscle).preferredColorScheme(.dark) ){
+                    ForEach(Array(day.muscles.indices),id:\.self){index in
+                        NavigationLink(destination:ExcerciseView(muscle: $day.muscles[index]){
+                            self.change?()
+                        }.preferredColorScheme(.dark) ){
                             
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color.openGreen,lineWidth:7)
@@ -24,14 +84,15 @@ struct DayView: View {
                                 .overlay(
                                     VStack{
                                         HStack{
-                                            Text("\(muscle.muscle)")
+                                            Text("\(day.muscles[index].muscle)")
                                                 .padding()
                                                 .font(.largeTitle)
                                                 .bold()
+                                                .scaledToFit()
                                                 .foregroundColor(.white)
                                             Spacer()
                                             VStack(alignment: .trailing){
-                                                ForEach(muscle.exercises){excercise in
+                                                ForEach(day.muscles[index].exercises){excercise in
                                                     Text(excercise.name.uppercased())
                                                         .foregroundColor(.white)
                                                 }
@@ -47,13 +108,23 @@ struct DayView: View {
                 }
                 .padding(40)
             }
+        }
             .toolbar{
-                Button("add muscle"){
-                    let newMuscle = Muscle(muscle: "Back", exercises: [Exercise]())
-                    
-                    day.muscles.append(newMuscle)
-                    self.change?()
+                Button{
+                    withAnimation {
+                        showadding.toggle()
+                    }
+                   
+                   
+                }label:{
+                
+                    if showadding == false{
+                        Image(systemName: "plus.circle")
+                    }else{
+                        Image(systemName: "minus.circle")
+                    }
                 }
+                .foregroundColor(Color.openGreen)
             }
         
     }
