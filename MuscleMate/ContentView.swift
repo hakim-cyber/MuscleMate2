@@ -14,6 +14,8 @@ struct ContentView: View {
                      Day(id: 2, muscles: [Muscle]()),
                      Day(id: 3, muscles: [Muscle]()),
                      Day(id: 4, muscles: [Muscle]())]
+    
+    @State var showAdd = false
     var body: some View {
         NavigationView{
             ScrollView{
@@ -52,10 +54,14 @@ struct ContentView: View {
                 }
                 .padding(40)
             }
+            .sheet(isPresented: $showAdd){
+                AddDayView()
+                    .preferredColorScheme(.dark)
+            }
             .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
                                     Button {
-                                        
+                                        showAdd = true
                                     }label:{
                                         Image(systemName: "plus")
                                             .foregroundColor(Color.openGreen)
