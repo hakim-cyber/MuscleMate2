@@ -18,44 +18,48 @@ struct AddDayView: View {
         NavigationView{
             Form{
                 Section("Day of Week"){
-                    VStack{
-                        HStack{
-                            if availibleDays.count != 0{
-                                Picker("",selection: $dayOfWeek){
-                                    
-                                    ForEach(availibleDays,id: \.self) { day in
-                                        Text(day)
+                    if availibleDays.count != 0{
+                    Group{
+                        VStack{
+                            HStack{
+                              
+                                    Picker("",selection: $dayOfWeek){
+                                        
+                                        ForEach(availibleDays,id: \.self) { day in
+                                            Text(day)
+                                        }
+                                        
                                     }
-                                    
-                                }
-                                .labelsHidden()
-                            }else{
+                                    .labelsHidden()
+                              
+                                Spacer()
+                                Text(" Day \(dayOfWeek)")
+                                    .font(.largeTitle)
+                            }
+                        }
+                        HStack{
+                            Spacer()
+                            Button("Add Day"){
+                                let day = Day(id: Int(dayOfWeek)!, muscles: [Muscle]())
+                                days.append(day)
+                                let newAvailible =   availibleDays.filter{$0 != dayOfWeek}
+                                availibleDays = newAvailible
                                 
                             }
                             Spacer()
-                            Text(" Day \(dayOfWeek)")
-                                .font(.largeTitle)
                         }
+                        .disabled(availibleDays.count == 0)
                     }
-                    HStack{
-                        Spacer()
-                        Button("Add Day"){
-                            let day = Day(id: Int(dayOfWeek)!, muscles: [Muscle]())
-                            days.append(day)
-                            let newAvailible =   availibleDays.filter{$0 != dayOfWeek}
-                            availibleDays = newAvailible
-                            
-                        }
-                        Spacer()
+                    }else{
+                        
                     }
-                    .disabled(availibleDays.count == 0)
-            
                     List(days.sorted{$0.id < $1.id}){day in
                         Text(" Day \(day.id)")
                     }
                 }
                 .foregroundColor(Color.openGreen)
             }
+            .onAppear(perform: load)
             .onChange(of: availibleDays){newArray in
                 if availibleDays.count != 0{
                     dayOfWeek = newArray[0]
@@ -65,8 +69,21 @@ struct AddDayView: View {
             }
             .toolbar{
                 Button("Done"){
+                    save()
                    dismiss()
                 }
+            }
+        }
+    }
+    func save(){
+        if let encoded = try? JSONEncoder().encode(days){
+            UserDefaults.standard.set(encoded, forKey: Day.saveKey)
+        }
+    }
+    func load(){
+        if let data = UserDefaults.standard.data(forKey: Day.saveKey){
+            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
+                days = decoded
             }
         }
     }

@@ -11,6 +11,7 @@ struct Day:Codable,Identifiable{
     let id:Int
     var muscles:[Muscle]
     
+    static let saveKey = "Days"
     
 }
 
