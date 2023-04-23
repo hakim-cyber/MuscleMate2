@@ -65,8 +65,8 @@ struct ContentView: View {
                                 }
                                 
                             ToolbarItem(placement: .principal) {
-                                    Image(systemName: "star.fill")
-                                        .font(.system(size: 20))
+                                    Image(systemName: "dumbbell.fill")
+                                        .font(.system(size: 30))
                                         
                                 }
                             }

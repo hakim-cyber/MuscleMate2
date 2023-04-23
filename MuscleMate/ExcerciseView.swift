@@ -13,25 +13,33 @@ struct ExcerciseView: View {
 
             ScrollView{
                 ForEach(muscle.exercises){excersise in
+                    HStack{
+                        let index = muscle.exercises.firstIndex(of:excersise)
+                        Image(systemName: "\((index ?? 0) + 1).circle")
+                            .font(.headline)
+                            .foregroundColor(Color.openGreen)
+                            .padding(4)
                     RoundedRectangle(cornerRadius: 15)
                         .stroke(Color.openGreen,lineWidth:7)
-                        .frame(width: 350,height: 200)
+                        .frame(width: 350,height: 100)
                         .overlay(
-                            VStack{
-                                    Text(excersise.name.uppercased())
-                                        .padding()
-                                        .font(.headline)
-                                        .bold()
-                                   
+                            HStack{
+                                Text("\(excersise.name.uppercased())")
+                                    .font(.headline)
+                                    .padding()
+                                    .bold()
                                 Spacer()
                                 
-                                Text("\(excersise.setsCount ) x \(excersise.repeatsCount)")
-                                    .padding()
+                                Text("\(excersise.setsCount) x \(excersise.repeatsCount)")
+                                    .padding(25)
                                     .font(.largeTitle)
-                                Spacer()
+                                    .foregroundColor(.gray)
+                                
+                                
                             }
-                            
                         )
+                }
+                 
                 }
                 .padding(40)
             }
@@ -44,7 +52,7 @@ struct ExcerciseView: View {
 struct ExcerciseView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
-            ExcerciseView(muscle: Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4)]))
+            ExcerciseView(muscle: Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4)]))
                 .preferredColorScheme(.dark)
         }
     }
