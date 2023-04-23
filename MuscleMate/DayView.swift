@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct DayView: View {
-    var day:Day
+    @Binding var day:Day
+    var change: (() -> Void)? = nil
+    @State var days = [Day]()
     var body: some View {
         
             ScrollView{
@@ -45,16 +47,42 @@ struct DayView: View {
                 }
                 .padding(40)
             }
+            .toolbar{
+                Button("add muscle"){
+                    let newMuscle = Muscle(muscle: "Back", exercises: [Exercise]())
+                    
+                    day.muscles.append(newMuscle)
+                    self.change?()
+                }
+            }
         
+    }
+    func load(){
+        if let data = UserDefaults.standard.data(forKey: Day.saveKey){
+            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
+                days = decoded
+                
+                  
+                
+            }
+        }
+    }
+    func save(){
+        if let encoded = try? JSONEncoder().encode(days){
+            UserDefaults.standard.set(encoded, forKey: Day.saveKey)
+        }
     }
 }
 
 struct DayView_Previews: PreviewProvider {
+    @State static var day = Day(id: 4, muscles: [Muscle(muscle: "Back", exercises: [Exercise(name: "Bench Press", repeatsCount: 12, setsCount: 4)])])
+    
     static var previews: some View {
         NavigationView{
-            DayView(day: Day(id: 4, muscles: [Muscle(muscle: "Back", exercises: [Exercise(name: "Bench Press", repeatsCount: 12, setsCount: 4)])]))
+            DayView(day: $day)
                 .preferredColorScheme(.dark)
         }
     }
 }
+
 

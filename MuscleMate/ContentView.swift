@@ -16,9 +16,12 @@ struct ContentView: View {
         NavigationView{
             ScrollView{
                 VStack(alignment: .leading){
-                    ForEach(daysOfWeek.sorted{$0.id < $1.id}) { day in
+                    ForEach(Array(daysOfWeek.indices) , id:\.self) { index in
                         
-                        NavigationLink(destination:DayView(day: day).preferredColorScheme(.dark) ){
+                        NavigationLink(destination:DayView(day: $daysOfWeek[index]){
+                            save()
+                            load()
+                        }.preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(Color.openGreen)
                                 .frame(width: 350,height: 150)
@@ -27,7 +30,7 @@ struct ContentView: View {
                                         
                                         HStack{
                                             Spacer()
-                                            Text("Day \(day.id)")
+                                            Text("Day \(daysOfWeek[index].id)")
                                                 .foregroundColor(.black)
                                                 .font(.largeTitle)
                                                 .bold()
@@ -38,7 +41,7 @@ struct ContentView: View {
                                         
                                         }
                                  Spacer()
-                                        Text("\(calculateCountOfExcercises(day:day)) Excersices")
+                                        Text("\(calculateCountOfExcercises(day:daysOfWeek[index])) Excersices")
                                             .foregroundColor(.black.opacity(0.9))
                                             
                                     }
@@ -97,7 +100,11 @@ struct ContentView: View {
             }
         }
     }
-    
+    func save(){
+        if let encoded = try? JSONEncoder().encode(daysOfWeek){
+            UserDefaults.standard.set(encoded, forKey: Day.saveKey)
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
