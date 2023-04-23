@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayView: View {
-    let day:Day
+    var day:Day
     var body: some View {
         
             ScrollView{

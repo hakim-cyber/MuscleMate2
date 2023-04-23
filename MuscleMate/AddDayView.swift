@@ -84,10 +84,19 @@ struct AddDayView: View {
         if let data = UserDefaults.standard.data(forKey: Day.saveKey){
             if let decoded = try? JSONDecoder().decode([Day].self, from: data){
                 days = decoded
+                newAvailible()
+                  
+                
             }
         }
     }
-    
+    func newAvailible(){
+       var  usedDays = [String]()
+        for day in days{
+            usedDays.append(String(day.id))
+        }
+        availibleDays = availibleDays.filter{!(usedDays.contains($0))}
+    }
 }
 
 struct AddDayView_Previews: PreviewProvider {

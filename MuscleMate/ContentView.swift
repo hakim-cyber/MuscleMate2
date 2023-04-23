@@ -9,18 +9,14 @@ import SwiftUI
 
 
 struct ContentView: View {
-    let daysOfWeek = [Day(id: 1, muscles: [Muscle](arrayLiteral: Muscle(muscle: "Back", exercises: [Exercise]()), Muscle(muscle: "Back", exercises: [Exercise(name: "H", repeatsCount: 5, setsCount: 15)])
-                                                  )),
-                     Day(id: 2, muscles: [Muscle]()),
-                     Day(id: 3, muscles: [Muscle]()),
-                     Day(id: 4, muscles: [Muscle]())]
+    @State var  daysOfWeek = [Day]()
     
     @State var showAdd = false
     var body: some View {
         NavigationView{
             ScrollView{
                 VStack(alignment: .leading){
-                    ForEach(daysOfWeek) { day in
+                    ForEach(daysOfWeek.sorted{$0.id < $1.id}) { day in
                         
                         NavigationLink(destination:DayView(day: day).preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
@@ -54,7 +50,7 @@ struct ContentView: View {
                 }
                 .padding(40)
             }
-            .sheet(isPresented: $showAdd){
+            .sheet(isPresented: $showAdd,onDismiss: load){
                 AddDayView()
                     .preferredColorScheme(.dark)
             }
@@ -76,6 +72,7 @@ struct ContentView: View {
                                         
                                 }
                             }
+            .onAppear(perform: load)
                            
             
         }
@@ -89,6 +86,16 @@ struct ContentView: View {
         }
         return count
         
+    }
+    func load(){
+        if let data = UserDefaults.standard.data(forKey: Day.saveKey){
+            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
+                daysOfWeek = decoded
+                
+                  
+                
+            }
+        }
     }
     
 }
