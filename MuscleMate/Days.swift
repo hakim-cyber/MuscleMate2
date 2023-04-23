@@ -9,7 +9,7 @@ import Foundation
 
 struct Day:Codable,Identifiable{
     let id:Int
-    let muscles:[Muscle]
+    var muscles:[Muscle]
     
     
 }
@@ -17,7 +17,7 @@ struct Day:Codable,Identifiable{
 struct Muscle: Codable,Identifiable{
     var id = UUID()
     let muscle:String
-    let exercises:[Exercise]
+    var exercises:[Exercise]
 
     
 }
