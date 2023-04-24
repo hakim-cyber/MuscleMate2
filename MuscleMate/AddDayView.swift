@@ -41,7 +41,10 @@ struct AddDayView: View {
                             Spacer()
                             Button("Add Day"){
                                 let day = Day(id: Int(dayOfWeek)!, muscles: [Muscle]())
-                                days.append(day)
+                                withAnimation {
+                                    days.append(day)
+                                }
+                              
                                 let newAvailible =   availibleDays.filter{$0 != dayOfWeek}
                                 availibleDays = newAvailible
                                 

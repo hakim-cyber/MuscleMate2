@@ -55,7 +55,10 @@ struct ExcerciseView: View {
                     Spacer()
                     Button("Add Excercise"){
                       let excercise = Exercise(name: pickedExcercise, repeatsCount: repeatsCount, setsCount: setsCount)
-                        muscle.exercises.append(excercise)
+                        withAnimation {
+                            muscle.exercises.append(excercise)
+                        }
+                       
                         self.change?()
                     }
                     .foregroundColor(Color.openGreen)
@@ -69,10 +72,21 @@ struct ExcerciseView: View {
                 ForEach(muscle.exercises){excersise in
                     HStack{
                         let index = muscle.exercises.firstIndex(of:excersise)
-                        Image(systemName: "\((index ?? 0) + 1).circle")
-                            .font(.headline)
-                            .foregroundColor(Color.openGreen)
-                            .padding(4)
+                        VStack{
+                            Image(systemName: "\((index ?? 0) + 1).circle")
+                                .font(.headline)
+                                .foregroundColor(Color.openGreen)
+                                .padding(4)
+                            
+                            Button(action: {
+                                remove(index: index!)
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                                    .padding(.vertical,9)
+                            }
+                        }
+                        
                         RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.openGreen,lineWidth:7)
                             .frame(width: 350,height: 100)
@@ -82,18 +96,19 @@ struct ExcerciseView: View {
                                         .font(.headline)
                                         .padding()
                                         .bold()
+                                 
                                     Spacer()
                                     
                                     Text("\(excersise.setsCount) x \(excersise.repeatsCount)")
                                         .padding(25)
                                         .font(.largeTitle)
                                         .foregroundColor(.gray)
-                                    
+                 
                                     
                                 }
                             )
                     }
-                    
+                    .padding(5)
                 }
                 .padding(40)
             }
@@ -120,6 +135,10 @@ struct ExcerciseView: View {
             }
         }
         
+    }
+    func remove(index:Int){
+        muscle.exercises.remove(at: index)
+        change?()
     }
 }
 

@@ -26,6 +26,23 @@ struct ContentView: View {
                                 .fill(Color.openGreen)
                                 .frame(width: 350,height: 150)
                                 .overlay(
+                                                                
+                                                                        Button(action: {
+                                                                            remove(index)
+                                                                        }) {
+                                                                            Image(systemName: "trash")
+                                                                                .foregroundColor(.red)
+                                                                        }
+                                                                        
+                                                                     
+                                                                       
+                                                                    
+                                                                    .padding()
+                                                                    .background(Color.openGreen)
+                                                                    .cornerRadius(15)
+                                                                    
+                                                                        , alignment: .leading)
+                                .overlay(
                                     VStack{
                                         
                                         HStack{
@@ -47,10 +64,12 @@ struct ContentView: View {
                                     }
                                         .padding()
                                 )
+                                
+                                                                    
                         }
                         
                     }
-                    .onDelete(perform: remove)
+                   
                 }
                 .padding(40)
             }
@@ -59,25 +78,28 @@ struct ContentView: View {
                     .preferredColorScheme(.dark)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                       EditButton()
+                ToolbarItem(placement: .navigationBarTrailing) {
+                   
+                        Button {
+                            withAnimation {
+                                showAdd = true
+                            }
+                            
+                        }label:{
+                            Image(systemName: "plus")
+                                .foregroundColor(Color.openGreen)
+                                .font(.headline)
+                                .padding()
+                        }
+                        
                     }
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        showAdd = true
-                                    }label:{
-                                        Image(systemName: "plus")
-                                            .foregroundColor(Color.openGreen)
-                                            .font(.headline)
-                                            .padding()
-                                    }
-                                }
-                                
-                            ToolbarItem(placement: .principal) {
-                                    Image(systemName: "dumbbell.fill")
-                                        .font(.system(size: 30))
-                                        
-                                }
+                    
+                    ToolbarItem(placement: .principal) {
+                        Image(systemName: "dumbbell.fill")
+                            .font(.system(size: 30))
+                        
+                    }
+                
                             }
             .onAppear(perform: load)
                            
@@ -109,10 +131,10 @@ struct ContentView: View {
             UserDefaults.standard.set(encoded, forKey: Day.saveKey)
         }
     }
-    func remove(at offset:IndexSet){
-        daysOfWeek.remove(atOffsets:  offset)
-       save()
-    }
+    func remove(_ index: Int){
+            daysOfWeek.remove(at: index)
+            save()
+        }
 }
 
 struct ContentView_Previews: PreviewProvider {

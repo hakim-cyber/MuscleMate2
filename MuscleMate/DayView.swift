@@ -31,42 +31,59 @@ struct DayView: View {
     @State var pickedMuscle = "glutes"
     
     @State var showadding =  false
+    @State var ShowStartWorkout = false
     var body: some View {
         VStack{
             if showadding{
-                HStack{
-                    
-                    Picker("",selection: $pickedMuscle){
+                if availibleMuscles.count != 0{
+                    HStack{
                         
-                        ForEach(availibleMuscles,id: \.self) { muscle in
-                            Text(muscle.uppercased())
-                                .foregroundColor(Color.openGreen)
+                        Picker("",selection: $pickedMuscle){
+                            
+                            ForEach(availibleMuscles,id: \.self) { muscle in
+                                Text(muscle.uppercased())
+                                    .foregroundColor(Color.openGreen)
+                            }
+                            
                         }
                         
-                    }
-                    
-                    .labelsHidden()
-                    .padding()
-                    
-                    Spacer()
-                    Text("\(pickedMuscle.uppercased())")
-                        .font(.largeTitle)
+                        .labelsHidden()
                         .padding()
-                }
-                .foregroundColor(Color.openGreen)
-                HStack{
-                    Spacer()
-                    Button("Add Muscle"){
-                        let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [Exercise]())
-                        day.muscles.append(muscle)
-                        self.change?()
-                        let newAvailible =   availibleMuscles.filter{$0 != pickedMuscle}
-                        availibleMuscles = newAvailible
                         
+                        Spacer()
+                        Text("\(pickedMuscle.uppercased())")
+                            .font(.system(size: 20))
+                            .padding()
                     }
-                    Spacer()
+                    .foregroundColor(Color.openGreen)
+                    HStack{
+                        Spacer()
+                        Button("Add Muscle"){
+                            let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [Exercise]())
+                            withAnimation {
+                                day.muscles.append(muscle)
+                                
+                            }
+                            self.change?()
+                            
+                            let newAvailible =   availibleMuscles.filter{$0 != pickedMuscle}
+                            availibleMuscles = newAvailible
+                            
+                        }
+                        Spacer()
+                    }
+                    .onChange(of: availibleMuscles){newArray in
+                        if !newArray.isEmpty{
+                            pickedMuscle = newArray[0]
+                        }
+                    }
+                }else{
+                    Text("All availible muscles used")
+                        .font(.largeTitle)
+                        .foregroundColor(Color.openGreen)
                 }
             }
+               
             
             ScrollView{
                 
@@ -77,39 +94,70 @@ struct DayView: View {
                         NavigationLink(destination:ExcerciseView(muscle: $day.muscles[index]){
                             self.change?()
                         }.preferredColorScheme(.dark) ){
-                            
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.openGreen,lineWidth:7)
-                                .frame(width: 350,height: 200)
-                                .overlay(
-                                    VStack{
-                                        HStack{
-                                            Text("\(day.muscles[index].muscle)")
-                                                .padding()
-                                                .font(.largeTitle)
-                                                .bold()
-                                                .scaledToFit()
-                                                .foregroundColor(.white)
-                                            Spacer()
-                                            VStack(alignment: .trailing){
-                                                ForEach(day.muscles[index].exercises){excercise in
-                                                    Text(excercise.name.uppercased())
+                            HStack{
+                                Button(action: {
+                                    remove(index: index)
+                                }) {
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.red)
+                                }
+                                .padding(.horizontal,5)
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.openGreen,lineWidth:7)
+                                    .frame(width: 350,height: 130)
+                                
+                                
+                                    .overlay(
+                                        VStack{
+                                            
+                                            HStack{
+                                                Spacer()
+                                                VStack{
+                                                    Spacer()
+                                                    Text("\(day.muscles[index].muscle)")
                                                         .foregroundColor(.white)
+                                                        .font(.largeTitle)
+                                                        .bold()
+                                                    Spacer()
+                                                    
                                                 }
-                                                .padding()
+                                                Spacer()
+                                                Image(systemName: "arrow.right")
+                                                    .foregroundColor(.white)
+                                                
+                                                
                                             }
+                                            Spacer()
+                                            Text("\(day.muscles[index].exercises.count) Excersices")
+                                                .foregroundColor(.white)
+                                            
                                         }
+                                            .padding()
                                         
-                                    }
-                                    
-                                )
+                                    )
+                            }
                         }
+                        .padding(5)
                     }
                 }
                 .padding(40)
             }
         }
+        .fullScreenCover(isPresented: $ShowStartWorkout){
+            StartDayWorkout(day: day)
+                .preferredColorScheme(.dark)
+        }
             .toolbar{
+                Button{
+                    withAnimation{
+                        ShowStartWorkout = true
+                    }
+                }label:{
+                    Label("Start",systemImage: "play.circle")
+                        .labelStyle(.titleAndIcon)
+                        .foregroundColor(Color.openGreen)
+                }
+                .padding()
                 Button{
                     withAnimation {
                         showadding.toggle()
@@ -126,6 +174,7 @@ struct DayView: View {
                 }
                 .foregroundColor(Color.openGreen)
             }
+            .onAppear(perform:newAvailible)
         
     }
     func load(){
@@ -142,6 +191,20 @@ struct DayView: View {
         if let encoded = try? JSONEncoder().encode(days){
             UserDefaults.standard.set(encoded, forKey: Day.saveKey)
         }
+    }
+    func newAvailible(){
+       var  usedMuscles = [String]()
+        for muscle in day.muscles{
+            usedMuscles.append(muscle.muscle.lowercased())
+        }
+        availibleMuscles = availibleMuscles.filter{!(usedMuscles.contains($0))}
+        if !availibleMuscles.isEmpty{
+            pickedMuscle = availibleMuscles[0]
+        }
+    }
+    func remove(index:Int){
+        day.muscles.remove(at: index)
+        change?()
     }
 }
 
