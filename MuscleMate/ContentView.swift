@@ -102,6 +102,7 @@ struct ContentView: View {
                 
                             }
             .onAppear(perform: load)
+            .preferredColorScheme(.dark)
                            
             
         }

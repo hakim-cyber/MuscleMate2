@@ -145,7 +145,7 @@ struct DayView: View {
         }
         .fullScreenCover(isPresented: $ShowStartWorkout){
             StartDayWorkout(day: day)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
         }
             .toolbar{
                 Button{
@@ -174,9 +174,11 @@ struct DayView: View {
                 }
                 .foregroundColor(Color.openGreen)
             }
+            
             .onAppear(perform:newAvailible)
         
     }
+       
     func load(){
         if let data = UserDefaults.standard.data(forKey: Day.saveKey){
             if let decoded = try? JSONDecoder().decode([Day].self, from: data){
