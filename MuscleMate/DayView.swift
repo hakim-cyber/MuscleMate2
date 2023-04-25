@@ -148,16 +148,24 @@ struct DayView: View {
                 .preferredColorScheme(.light)
         }
             .toolbar{
-                Button{
-                    withAnimation{
-                        ShowStartWorkout = true
+                HStack{
+                    Text("~\(estimatedTimeForWorkout / 60) mins")
+                        .foregroundColor(.gray)
+                    Button{
+                        withAnimation{
+                            ShowStartWorkout = true
+                        }
+                    }label:{
+                        Label("Start",systemImage: "play.circle")
+                            .labelStyle(.titleAndIcon)
+                            .foregroundColor(Color.openGreen)
                     }
-                }label:{
-                    Label("Start",systemImage: "play.circle")
-                        .labelStyle(.titleAndIcon)
-                        .foregroundColor(Color.openGreen)
+                  
+                    
+                    
                 }
                 .padding()
+               
                 Button{
                     withAnimation {
                         showadding.toggle()
@@ -207,6 +215,17 @@ struct DayView: View {
     func remove(index:Int){
         day.muscles.remove(at: index)
         change?()
+    }
+    var estimatedTimeForWorkout:Int{
+        var setsCount = 0
+        for muscle in day.muscles {
+            for excercise in muscle.exercises{
+                setsCount += excercise.setsCount
+            }
+        }
+       var estimatedTime = setsCount * 120 + (setsCount - 1) * 120
+        
+        return estimatedTime
     }
 }
 
