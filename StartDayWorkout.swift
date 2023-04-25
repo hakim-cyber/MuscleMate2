@@ -14,46 +14,114 @@ struct StartDayWorkout: View {
     @State var excercisesIndex = 0
     
     @Environment(\.presentationMode) var presentationMode
-    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var timeRemainingRest = 150
+    @State var startRest = false
+    @State var setsCountRemaining = 4
     
     var body: some View {
         NavigationView{
             ZStack{
                 // Image of which muscle is working now
-                
+           
                 Color.openGreen
-                    .ignoresSafeArea()
-                
+                    .edgesIgnoringSafeArea(.all)
+             
+               
                 VStack(alignment: .center){
                     VStack{
-                        Text("\(allExcercises.isEmpty ? "No Excersises" : allExcercises[excercisesIndex].name.uppercased())")
-                            .font(.largeTitle)
-                            .bold()
-                            .padding()
-                            .foregroundColor(.black)
-                        Text("\(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].setsCount) x \(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatsCount)")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        
+                        if !showEnd{
+                            if !startRest{
+                                Text("\(allExcercises.isEmpty ? "No Excersises" : allExcercises[excercisesIndex].name.uppercased())")
+                                    .font(.system(size: 30))
+                                    .bold()
+                                    .padding()
+                                    .foregroundColor(.black)
+                                
+                            }else{
+                                Text("\(timeRemainingRest)")
+                                    .font(.system(size: 60))
+                                    .bold()
+                                    .padding()
+                                    .foregroundColor(.black)
+                            }
+                        }else{
+                            
+                            Text("You Finished Workout :)")
+                                .font(.system(size: 30))
+                                .bold()
+                                .padding()
+                                .foregroundColor(.black)
+                        }
                     }
-                    .offset(x:0,y: 250)
-                   Spacer()
-                    Spacer()
-                    Spacer()
+                    .offset(x:0,y: 200)
+      
+                  Spacer()
+                  
                     HStack{
                         if showEnd == false{
-                            Button{
-                                withAnimation {
-                                    nextExcercise()
+                            VStack{
+                             
+                                HStack{
+                                    
+                                        Button{
+                                            withAnimation {
+                                                if timeRemainingRest == 0{
+                                                    startRest = false
+                                                }else{
+                                                    startRest.toggle()
+                                                }
+                                              
+                                              
+                                                if startRest == false{
+                                                    nextExcercise()
+                                                    timeRemainingRest = 150
+                                                }
+                                            }
+                                            
+                                        }label: {
+                                            VStack{
+                                              
+                                                    if !startRest{
+                                                        Image(systemName: "play.circle")
+                                                            .padding(10)
+                                                            .foregroundColor(Color.openGreen)
+                                                            .background(Color.black)
+                                                            .clipShape(Circle())
+                                                            .font(.system(size: 80))
+                                                            .padding()
+                                                        
+                                                        Text("Next")
+                                                            .foregroundColor(Color.openGreen)
+                                                    }else{
+                                                      Image(systemName: "stop.circle")
+                                                            .padding(10)
+                                                            .foregroundColor(Color.openGreen)
+                                                            .background(Color.black)
+                                                            .clipShape(Circle())
+                                                            .font(.system(size: 80))
+                                                            .padding()
+                                                        Text("Stop Rest")
+                                                            .foregroundColor(Color.openGreen)
+                                                    }
+                                                
+                                            }
+                                        }
+                                  
                                 }
-                              
-                            }label: {
-                                Image(systemName: "play.circle")
-                                    .foregroundColor(Color.openGreen)
-                                    .background(Color.black)
-                                    .clipShape(Circle())
-                                    .font(.system(size: 60))
+                               
+                            }
+                            .onReceive(timer) { time in
+                                guard startRest else { return }
                                 
+                                if timeRemainingRest > 0 {
+                                    timeRemainingRest -= 1
+                                }
+                            }
+                            .onChange(of: timeRemainingRest){new in
+                                if new == 0 {
+                                    startRest = false
+                                }
                             }
                         }else{
                             Button("Start Again"){
@@ -63,10 +131,37 @@ struct StartDayWorkout: View {
                                 }
                                
                             }
+                            .padding()
                         }
                         
                     }
-                    Spacer()
+                    .frame(width: 390,height: 300)
+                    .background(Color.black)
+                    .background(Color.openGreen)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .overlay(
+                    Text("Reps \(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatsCount)")
+                        .padding()
+                        .foregroundColor(Color.openGreen)
+                        .font(.system(size: 25))
+                        .bold()
+                        ,alignment:.topLeading)
+                    .overlay(
+                        Text("Set \(allExcercises[excercisesIndex].setsCount - setsCountRemaining + 1) / \(allExcercises[excercisesIndex].setsCount)")
+                        .padding()
+                        .foregroundColor(Color.openGreen)
+                        .font(.system(size: 25))
+                        .bold()
+                        ,alignment:.topTrailing)
+                    .padding(.vertical,30)
+                 
+                   
+                }
+                .onAppear{
+                    setsCountRemaining = allExcercises[excercisesIndex].setsCount
+                }
+                .onChange(of: excercisesIndex){new in
+                    setsCountRemaining = allExcercises[new].setsCount
                 }
                 
             }
@@ -112,20 +207,34 @@ struct StartDayWorkout: View {
     }
     func nextExcercise(){
         let countOfExcercises = allExcercises.count
+      
+        setsCountRemaining -= 1
+       
+            if (countOfExcercises - 1) != excercisesIndex{
+                if setsCountRemaining == 0 {
+                    if !showEnd{
+                        excercisesIndex += 1
+                    }
+                }
+                
+            }else{
+               
+                showEnd = true
+            }
         
-        if (countOfExcercises - 1) > excercisesIndex{
-            excercisesIndex += 1
-        }else{
-            showEnd = true
-        }
+    }
+    var excercisesRemaining:Int{
+        let all = allExcercises.count
+        let nowOn = excercisesIndex + 1
+        return all - nowOn
     }
 }
 
 struct StartDayWorkout_Previews: PreviewProvider {
-    
+  
     static var previews: some View {
-        let muscle = Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 12, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4)])
-        let muscle2 = Muscle(muscle: "back", exercises: [Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 12, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4)])
-        StartDayWorkout(day: Day(id: 1, muscles: [muscle,muscle2]))
+        let muscle = Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 12, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 10, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 11, setsCount: 4)])
+      
+        StartDayWorkout(day: Day(id: 1, muscles: [muscle]))
     }
 }
