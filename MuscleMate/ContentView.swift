@@ -12,18 +12,21 @@ struct ContentView: View {
     @State var  daysOfWeek = [Day]()
     
     @State var showAdd = false
+    
+    @State var  todayString = ""
+    let timer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
     var body: some View {
         NavigationView{
             ScrollView{
                 VStack(alignment: .leading){
-                    ForEach(Array(daysOfWeek.indices) , id:\.self) { index in
+                    ForEach(Array(daysOfWeek.indices).sorted{daysOfWeek[$0].id < daysOfWeek[$1].id  } , id:\.self) { index in
                         
                         NavigationLink(destination:DayView(day: $daysOfWeek[index]){
                             save()
                             load()
                         }.preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.openGreen)
+                                .fill(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
                                 .frame(width: 350,height: 150)
                                 .overlay(
                                                                 
@@ -38,7 +41,7 @@ struct ContentView: View {
                                                                        
                                                                     
                                                                     .padding()
-                                                                    .background(Color.openGreen)
+                                                                    .background(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
                                                                     .cornerRadius(15)
                                                                     
                                                                         , alignment: .leading)
@@ -69,9 +72,28 @@ struct ContentView: View {
                         }
                         
                     }
+                    .onReceive(timer){_ in
+                        let calendar = Calendar.current
+                        let today = Date()
+                        let weekday = calendar.component(.weekday, from: today)
+                        
+                        let weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+                        
+                        todayString = weekdays[weekday - 1]
+                    }
+                    .onAppear{
+                        let calendar = Calendar.current
+                        let today = Date()
+                        let weekday = calendar.component(.weekday, from: today)
+                        
+                        let weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+                        
+                        todayString = weekdays[weekday - 1]
+                    }
                    
                 }
                 .padding(40)
+                
             }
             .sheet(isPresented: $showAdd,onDismiss: load){
                 AddDayView()
@@ -121,21 +143,21 @@ struct ContentView: View {
         if let data = UserDefaults.standard.data(forKey: Day.saveKey){
             if let decoded = try? JSONDecoder().decode([Day].self, from: data){
                 daysOfWeek = decoded
-                
-                  
-                
             }
         }
     }
+    
     func save(){
         if let encoded = try? JSONEncoder().encode(daysOfWeek){
             UserDefaults.standard.set(encoded, forKey: Day.saveKey)
         }
     }
+    
     func remove(_ index: Int){
             daysOfWeek.remove(at: index)
             save()
         }
+    
     func CheckWeekDay(day:Day) ->String{
         switch day.id{
         case 1:
@@ -156,6 +178,13 @@ struct ContentView: View {
             
         default:
             return "Day of Week"
+        }
+    }
+    func checkToday(day:String)->Bool{
+        if day == todayString{
+            return true
+        }else{
+            return false
         }
     }
 }

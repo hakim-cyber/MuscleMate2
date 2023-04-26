@@ -26,14 +26,14 @@ struct AddDayView: View {
                                 Picker("",selection: $dayOfWeek){
                                     
                                     ForEach(availibleDays,id: \.self) { day in
-                                        Text(day)
+                                        Text(CheckWeekDay(day: Int(day)!))
                                     }
                                     
                                 }
                                 .labelsHidden()
                                 
                                 Spacer()
-                                Text(" Day \(dayOfWeek)")
+                                Text("\(CheckWeekDay(day: Int(dayOfWeek)!))")
                                     .font(.largeTitle)
                             }
                         }
@@ -57,7 +57,7 @@ struct AddDayView: View {
                     
                 }
                 List(days.sorted{$0.id < $1.id}){day in
-                    Text(" Day \(day.id)")
+                    Text("\(CheckWeekDay(day:day.id))")
                 }
             }
             .foregroundColor(Color.openGreen)
@@ -99,6 +99,28 @@ struct AddDayView: View {
             usedDays.append(String(day.id))
         }
         availibleDays = availibleDays.filter{!(usedDays.contains($0))}
+    }
+    func CheckWeekDay(day:Int) ->String{
+        switch day{
+        case 1:
+            return "Monday"
+        case 2:
+            return "Tuesday"
+        case 3:
+            return "Wednesday"
+        case 4:
+            return "Thursday"
+        case 5:
+            return "Friday"
+        case 6:
+            return "Saturday"
+        case 7:
+            return "Sunday"
+       
+            
+        default:
+            return "Day of Week"
+        }
     }
 }
 
