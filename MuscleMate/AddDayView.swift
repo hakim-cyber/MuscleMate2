@@ -41,12 +41,14 @@ struct AddDayView: View {
                             Spacer()
                             Button("Add Day"){
                                 let day = Day(id: Int(dayOfWeek)!, muscles: [Muscle]())
+                                addNotification(for: Int(dayOfWeek)!)
                                 withAnimation {
                                     days.append(day)
                                 }
                               
                                 let newAvailible =   availibleDays.filter{$0 != dayOfWeek}
                                 availibleDays = newAvailible
+                                
                                 
                             }
                             Spacer()
@@ -120,6 +122,47 @@ struct AddDayView: View {
             
         default:
             return "Day of Week"
+        }
+    }
+    func addNotification(for day:Int){
+        let center = UNUserNotificationCenter.current()
+        
+        var weekday = day + 1
+        if day == 7{
+            weekday = 0
+        }
+        
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            content.title = "Go for a workout at gym \(day)"
+            content.body = "❝Each new day is a new oportunity to improve❞"
+            content.sound = UNNotificationSound.default
+            
+            var dateComponents = DateComponents()
+            dateComponents.hour = 17
+            dateComponents.minute = 30
+            dateComponents.second = 0
+            dateComponents.weekday = weekday
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+           
+           //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
+            let request = UNNotificationRequest(identifier: "workout-\(day)", content: content, trigger:trigger)
+            
+            center.add(request)
+        }
+        
+        center.getNotificationSettings{settings in
+            if settings.authorizationStatus == .authorized{
+                addRequest()
+            }else{
+                center.requestAuthorization(options: [.alert,.badge,.sound]){success , error in
+                    if success{
+                        addRequest()
+                    }else{
+                        print("\(String(describing: error?.localizedDescription))")
+                    }
+                }
+            }
         }
     }
 }

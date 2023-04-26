@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
-
+import UserNotifications
 
 struct ContentView: View {
     @State var  daysOfWeek = [Day]()
     
+
     @State var showAdd = false
     
     @State var  todayString = ""
@@ -154,8 +155,15 @@ struct ContentView: View {
     }
     
     func remove(_ index: Int){
+        let center = UNUserNotificationCenter.current()
+        
+        let identifier = "workout-\(daysOfWeek[index].id)"
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        
             daysOfWeek.remove(at: index)
             save()
+        
+       
         }
     
     func CheckWeekDay(day:Day) ->String{
