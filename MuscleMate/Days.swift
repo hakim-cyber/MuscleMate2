@@ -18,7 +18,7 @@ struct Day:Codable,Identifiable{
 struct Muscle: Codable,Identifiable{
     var id = UUID()
     let muscle:String
-    var exercises:[Exercise]
+    var exercises:[ExerciseApi]
 
     
 }

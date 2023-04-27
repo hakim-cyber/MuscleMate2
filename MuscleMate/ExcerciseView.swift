@@ -12,26 +12,26 @@ struct ExcerciseView: View {
     var change: (() -> Void)? = nil
     
     @State var showadding =  false
-    @State var pickedExcercise = ""
-    @State var pickedExcerciseTry:ExerciseApi?
+   
+    @State var pickedExcerciseTry = 0
     @State var setsCount = 1
     @State var repeatsCount = 1
     
-    @State var excercisesForThisMuscle = [ExerciseApi]()
+    @State var exercisesForThisMuscle = [ExerciseApi]()
     var body: some View {
         VStack{
             if showadding{
                 VStack{
                     HStack{
                         Spacer()
-                        Picker("Choose Exercise",selection: $pickedExcerciseTry){
-                            ForEach(excercisesForThisMuscle,id: \.id) { exercise in
-                                Text(exercise.name.uppercased())
+                        Picker("Select an exercise", selection: $pickedExcerciseTry) {
+                            ForEach(exercisesForThisMuscle.indices, id: \.self) { index in
+                                Text(exercisesForThisMuscle[index].name.uppercased())
                             }
-                            
                         }
-                        .pickerStyle(.navigationLink)
-                        .labelsHidden()
+                        .pickerStyle(.menu)
+                       
+               
                         Spacer()
                         
                     }
@@ -65,9 +65,13 @@ struct ExcerciseView: View {
                 HStack{
                     Spacer()
                     Button("Add Excercise"){
-                        let excercise = 
+                        var excercise = exercisesForThisMuscle[pickedExcerciseTry]
+                        excercise.sets = setsCount
+                        excercise.repeatCount = repeatsCount
                         withAnimation {
+                   
                             muscle.exercises.append(excercise)
+                            
                         }
                        
                         self.change?()
@@ -76,7 +80,7 @@ struct ExcerciseView: View {
                     Spacer()
                 }
                 .padding()
-                .disabled(self.pickedExcercise == "")
+                
             }
             
             ScrollView{
@@ -110,7 +114,7 @@ struct ExcerciseView: View {
                                  
                                     Spacer()
                                     
-                                    Text("\(excersise.setsCount) x \(excersise.repeatsCount)")
+                                    Text("\(excersise.sets!) x \(excersise.repeatCount!)")
                                         .padding(25)
                                         .font(.system(.largeTitle,design: .rounded))
                                         .foregroundColor(.gray)
@@ -159,7 +163,7 @@ struct ExcerciseView: View {
         
         if let data = UserDefaults.standard.data(forKey: saveKeyExercises){
             if let decoded = try? JSONDecoder().decode([ExerciseApi].self, from: data){
-                excercisesForThisMuscle = decoded.filter{$0.bodyPart == muscle.muscle.lowercased()}
+                exercisesForThisMuscle = decoded.filter{$0.bodyPart == muscle.muscle.lowercased()}
                 
             }
         }
@@ -168,7 +172,7 @@ struct ExcerciseView: View {
 }
 
 struct ExcerciseView_Previews: PreviewProvider {
-    @State  static var muscle = Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 14, setsCount: 4)])
+    @State  static var muscle = Muscle(muscle: "Chest", exercises: [ExerciseApi.defaultExercise])
     static var previews: some View {
         NavigationView{
             ExcerciseView(muscle:$muscle)

@@ -17,6 +17,7 @@ import SwiftUI
         let target:String
         
         var sets:Int? = 0
+        var repeatCount:Int? = 0
         
         static var defaultExercise = ExerciseApi(bodyPart: "Back", equipment: "Dumbell", gifUrl: "sdssdsdsd", id: "001", name: "Dumbell Press", target: "back")
        

@@ -44,15 +44,12 @@ struct DayView: View {
                 if availibleMuscles.count != 0{
                     HStack{
                         
-                        Picker("",selection: $pickedMuscle){
-                            
-                            ForEach(availibleMuscles,id: \.self) { muscle in
+                        Picker("", selection: $pickedMuscle) {
+                            ForEach(availibleMuscles, id: \.self) { muscle in
                                 Text(muscle.uppercased())
                                     .foregroundColor(Color.openGreen)
                             }
-                            
                         }
-                        
                         .labelsHidden()
                         .padding()
                         
@@ -65,7 +62,7 @@ struct DayView: View {
                     HStack{
                         Spacer()
                         Button("Add Muscle"){
-                            let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [Exercise]())
+                            let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [ExerciseApi]())
                             withAnimation {
                                 day.muscles.append(muscle)
                                 
@@ -227,7 +224,7 @@ struct DayView: View {
         var setsCount = 0
         for muscle in day.muscles {
             for excercise in muscle.exercises{
-                setsCount += excercise.setsCount
+                setsCount += excercise.sets!
             }
         }
        var estimatedTime = setsCount * 120 + (setsCount - 1) * 120
@@ -237,7 +234,7 @@ struct DayView: View {
 }
 
 struct DayView_Previews: PreviewProvider {
-    @State static var day = Day(id: 4, muscles: [Muscle(muscle: "Back", exercises: [Exercise(name: "Bench Press", repeatsCount: 12, setsCount: 4)])])
+    @State static var day = Day(id: 4, muscles: [Muscle(muscle: "Back", exercises: [ExerciseApi.defaultExercise])])
     
     static var previews: some View {
         NavigationView{

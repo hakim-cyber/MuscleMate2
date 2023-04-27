@@ -141,14 +141,14 @@ struct StartDayWorkout: View {
                     .background(Color.openGreen)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .overlay(
-                    Text("Reps \(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatsCount)")
+                    Text("Reps \(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatCount!)")
                         .padding()
                         .foregroundColor(Color.openGreen)
                         .font(.system(size: 25))
                         .bold()
                         ,alignment:.topLeading)
                     .overlay(
-                        Text("Set \((!allExcercises.isEmpty) ?  allExcercises[excercisesIndex].setsCount - setsCountRemaining + 1 : 0) / \((!allExcercises.isEmpty) ? allExcercises[excercisesIndex].setsCount : 0)")
+                        Text("Set \((!allExcercises.isEmpty) ?  allExcercises[excercisesIndex].sets! - setsCountRemaining + 1 : 0) / \((!allExcercises.isEmpty) ? allExcercises[excercisesIndex].sets! : 0)")
                         .padding()
                         .foregroundColor(Color.openGreen)
                         .font(.system(size: 25))
@@ -160,12 +160,12 @@ struct StartDayWorkout: View {
                 }
                 .onAppear{
                     if (!allExcercises.isEmpty){
-                        setsCountRemaining = allExcercises[excercisesIndex].setsCount
+                        setsCountRemaining = allExcercises[excercisesIndex].sets!
                     }
                 }
                 .onChange(of: excercisesIndex){new in
                     if (!allExcercises.isEmpty){
-                        setsCountRemaining = allExcercises[new].setsCount
+                        setsCountRemaining = allExcercises[new].sets!
                     }
                 }
                 
@@ -191,9 +191,9 @@ struct StartDayWorkout: View {
        
     }
     
-    var allExcercises:[Exercise]{
+    var allExcercises:[ExerciseApi]{
         let muscles = day.muscles
-        var excercises = [Exercise]()
+        var excercises = [ExerciseApi]()
         for muscle in muscles {
             for excercise in muscle.exercises {
                 excercises.append(excercise)
@@ -256,7 +256,7 @@ struct StartDayWorkout: View {
 struct StartDayWorkout_Previews: PreviewProvider {
   
     static var previews: some View {
-        let muscle = Muscle(muscle: "Chest", exercises: [Exercise(name: "bench Press", repeatsCount: 12, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 10, setsCount: 4),Exercise(name: "bench Press", repeatsCount: 11, setsCount: 4)])
+        let muscle = Muscle(muscle: "Chest", exercises: [ExerciseApi.defaultExercise])
       
         StartDayWorkout(day: Day(id: 1, muscles: [muscle]))
     }
