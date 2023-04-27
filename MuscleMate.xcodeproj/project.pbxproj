@@ -19,6 +19,7 @@
 		0836080129F70B7400B75756 /* StartDayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080029F70B7400B75756 /* StartDayWorkout.swift */; };
 		0836080329F873F800B75756 /* Fireworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080229F873F800B75756 /* Fireworks.swift */; };
 		0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080429F9505A00B75756 /* AnimatedBackground.swift */; };
+		0836080729FB0A7400B75756 /* AllExcercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080629FB0A7300B75756 /* AllExcercisesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		0836080029F70B7400B75756 /* StartDayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayWorkout.swift; sourceTree = "<group>"; };
 		0836080229F873F800B75756 /* Fireworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fireworks.swift; sourceTree = "<group>"; };
 		0836080429F9505A00B75756 /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
+		0836080629FB0A7300B75756 /* AllExcercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExcercisesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 		083607DA29F42AA600B75756 = {
 			isa = PBXGroup;
 			children = (
+				0836080629FB0A7300B75756 /* AllExcercisesView.swift */,
 				0836080429F9505A00B75756 /* AnimatedBackground.swift */,
 				0836080029F70B7400B75756 /* StartDayWorkout.swift */,
 				0836080229F873F800B75756 /* Fireworks.swift */,
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0836080729FB0A7400B75756 /* AllExcercisesView.swift in Sources */,
 				083607E929F42AA600B75756 /* ContentView.swift in Sources */,
 				083607F929F4344500B75756 /* DayView.swift in Sources */,
 				0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */,

@@ -13,18 +13,29 @@ struct ExcerciseView: View {
     
     @State var showadding =  false
     @State var pickedExcercise = ""
+    @State var pickedExcerciseTry:ExerciseApi?
     @State var setsCount = 1
     @State var repeatsCount = 1
+    
+    @State var excercisesForThisMuscle = [ExerciseApi]()
     var body: some View {
         VStack{
             if showadding{
                 VStack{
                     HStack{
                         Spacer()
-                        TextField("Excercise", text: $pickedExcercise)
-                            .foregroundColor(Color.openGreen)
+                        Picker("Choose Exercise",selection: $pickedExcerciseTry){
+                            ForEach(excercisesForThisMuscle,id: \.id) { exercise in
+                                Text(exercise.name.uppercased())
+                            }
+                            
+                        }
+                        .pickerStyle(.navigationLink)
+                        .labelsHidden()
                         Spacer()
+                        
                     }
+                    .padding()
                      
                     HStack{
                         Picker("Sets",selection: $setsCount){
@@ -54,7 +65,7 @@ struct ExcerciseView: View {
                 HStack{
                     Spacer()
                     Button("Add Excercise"){
-                      let excercise = Exercise(name: pickedExcercise, repeatsCount: repeatsCount, setsCount: setsCount)
+                        let excercise = 
                         withAnimation {
                             muscle.exercises.append(excercise)
                         }
@@ -134,12 +145,26 @@ struct ExcerciseView: View {
                 
             }
         }
+        .onAppear{
+            loadExercises()
+        }
         
     }
     func remove(index:Int){
         muscle.exercises.remove(at: index)
         change?()
     }
+    func loadExercises(){
+        let saveKeyExercises = "exercises"
+        
+        if let data = UserDefaults.standard.data(forKey: saveKeyExercises){
+            if let decoded = try? JSONDecoder().decode([ExerciseApi].self, from: data){
+                excercisesForThisMuscle = decoded.filter{$0.bodyPart == muscle.muscle.lowercased()}
+                
+            }
+        }
+    }
+   
 }
 
 struct ExcerciseView_Previews: PreviewProvider {

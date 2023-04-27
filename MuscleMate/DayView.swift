@@ -6,29 +6,35 @@
 //
 
 import SwiftUI
+/*
+ "back",
+   "cardio",
+   "chest",
+   "lower arms",
+   "lower legs",
+   "neck",
+   "shoulders",
+   "upper arms",
+   "upper legs",
+   "waist"
+ */
 
 struct DayView: View {
     @Binding var day:Day
     var change: (() -> Void)? = nil
     @State var days = [Day]()
     
-    @State var availibleMuscles = ["abdominals",
-                                   "abductors",
-                                   "adductors",
-                                  "biceps",
-                                   "calves",
+    @State var availibleMuscles = ["back",
+                                   "cardio",
                                    "chest",
-                                   "forearms",
-                                   "glutes",
-                                   "hamstrings",
-                                   "lats",
-                                   "lower_back",
-                                   "middle_back",
+                                   "lower arms",
+                                   "lower legs",
                                    "neck",
-                                   "quadriceps",
-                                   "traps",
-                                   "triceps"]
-    @State var pickedMuscle = "glutes"
+                                   "shoulders",
+                                   "upper arms",
+                                   "upper legs",
+                                   "waist"]
+    @State var pickedMuscle = "back"
     
     @State var showadding =  false
     @State var ShowStartWorkout = false
