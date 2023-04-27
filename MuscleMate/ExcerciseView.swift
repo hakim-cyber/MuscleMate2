@@ -93,7 +93,7 @@ struct ExcerciseView: View {
                             .overlay(
                                 HStack{
                                     Text("\(excersise.name.uppercased())")
-                                        .font(.headline)
+                                        .font(.system(.headline,design: .serif))
                                         .padding()
                                         .bold()
                                  
@@ -101,7 +101,7 @@ struct ExcerciseView: View {
                                     
                                     Text("\(excersise.setsCount) x \(excersise.repeatsCount)")
                                         .padding(25)
-                                        .font(.largeTitle)
+                                        .font(.system(.largeTitle,design: .rounded))
                                         .foregroundColor(.gray)
                  
                                     

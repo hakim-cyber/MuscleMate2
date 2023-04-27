@@ -116,7 +116,7 @@ struct DayView: View {
                                                     Spacer()
                                                     Text("\(day.muscles[index].muscle)")
                                                         .foregroundColor(.white)
-                                                        .font(.largeTitle)
+                                                        .font(.system(.largeTitle,design: .serif))
                                                         .bold()
                                                     Spacer()
                                                     
@@ -130,7 +130,7 @@ struct DayView: View {
                                             Spacer()
                                             Text("\(day.muscles[index].exercises.count) Excersices")
                                                 .foregroundColor(.white)
-                                            
+                                                .font(.system(.callout,design: .rounded))
                                         }
                                             .padding()
                                         
@@ -160,6 +160,7 @@ struct DayView: View {
                             .labelStyle(.titleAndIcon)
                             .foregroundColor(Color.openGreen)
                     }
+                    .disabled(day.muscles.isEmpty)
                   
                     
                     

@@ -33,10 +33,11 @@ struct StartDayWorkout: View {
                         if !showEnd{
                             if !startRest{
                                 Text("\(allExcercises.isEmpty ? "No Excersises" : allExcercises[excercisesIndex].name.uppercased())")
-                                    .font(.system(size: 30))
+                                    .font(.system(.largeTitle,design: .serif))
                                     .bold()
                                     .padding()
                                     .foregroundColor(.black)
+                               
                                 
                             }else{
                                 Text("\(timeRemainingRest)")
@@ -147,7 +148,7 @@ struct StartDayWorkout: View {
                         .bold()
                         ,alignment:.topLeading)
                     .overlay(
-                        Text("Set \(allExcercises[excercisesIndex].setsCount - setsCountRemaining + 1) / \(allExcercises[excercisesIndex].setsCount)")
+                        Text("Set \((!allExcercises.isEmpty) ?  allExcercises[excercisesIndex].setsCount - setsCountRemaining + 1 : 0) / \((!allExcercises.isEmpty) ? allExcercises[excercisesIndex].setsCount : 0)")
                         .padding()
                         .foregroundColor(Color.openGreen)
                         .font(.system(size: 25))
@@ -158,10 +159,14 @@ struct StartDayWorkout: View {
                    
                 }
                 .onAppear{
-                    setsCountRemaining = allExcercises[excercisesIndex].setsCount
+                    if (!allExcercises.isEmpty){
+                        setsCountRemaining = allExcercises[excercisesIndex].setsCount
+                    }
                 }
                 .onChange(of: excercisesIndex){new in
-                    setsCountRemaining = allExcercises[new].setsCount
+                    if (!allExcercises.isEmpty){
+                        setsCountRemaining = allExcercises[new].setsCount
+                    }
                 }
                 
             }
@@ -220,6 +225,7 @@ struct StartDayWorkout: View {
             }else{
                
                 showEnd = true
+                checkAsMade()
             }
         
     }
@@ -227,6 +233,23 @@ struct StartDayWorkout: View {
         let all = allExcercises.count
         let nowOn = excercisesIndex + 1
         return all - nowOn
+    }
+    
+    func checkAsMade(){
+        var madeArray = [Day]()
+        let saveKeyMade = "Made"
+        
+       if let data = UserDefaults.standard.data(forKey: saveKeyMade){
+           if let decoded = try? JSONDecoder().decode([Day].self, from: data){
+               madeArray = decoded
+           }
+        }
+        madeArray.append(day)
+        if let encoded = try? JSONEncoder().encode(madeArray){
+            UserDefaults.standard.set(encoded, forKey: saveKeyMade)
+        }
+        
+        
     }
 }
 

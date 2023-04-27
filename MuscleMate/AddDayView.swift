@@ -12,6 +12,7 @@ struct AddDayView: View {
     @State var days = [Day]()
     
     @State var availibleDays = ["1","2","3","4","5","6","7"]
+    @State var pickedDate = Date()
     
     @State private var dayOfWeek = "1"
     var body: some View {
@@ -37,6 +38,13 @@ struct AddDayView: View {
                                     .font(.largeTitle)
                             }
                         }
+                        Section("Reminder"){
+                        DatePicker("", selection: $pickedDate,  displayedComponents:  .hourAndMinute)
+                            .datePickerStyle(.wheel)
+                            .labelsHidden()
+                             
+                    }
+                        
                         HStack{
                             Spacer()
                             Button("Add Day"){
@@ -139,8 +147,8 @@ struct AddDayView: View {
             content.sound = UNNotificationSound.default
             
             var dateComponents = DateComponents()
-            dateComponents.hour = 17
-            dateComponents.minute = 30
+            dateComponents.hour =  Int(Calendar.current.dateComponents([.hour], from: pickedDate).hour ?? 0)
+            dateComponents.minute =  Int(Calendar.current.dateComponents([.minute], from: pickedDate).minute ?? 0)
             dateComponents.second = 0
             dateComponents.weekday = weekday
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)

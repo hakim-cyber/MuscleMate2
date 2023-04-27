@@ -13,9 +13,13 @@ struct ContentView: View {
     
 
     @State var showAdd = false
+    @State var madeDays = [Day]()
     
     @State var  todayString = ""
-    let timer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
+    
+    let DailyTimer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
+    let weeklyTimer = Timer.publish(every: 86400 * 7, on: .current, in: .common).autoconnect()
+    
     var body: some View {
         NavigationView{
             ScrollView{
@@ -28,24 +32,34 @@ struct ContentView: View {
                         }.preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
-                                .frame(width: 350,height: 150)
+                                .frame(width: 400,height: 150)
                                 .overlay(
-                                                                
-                                                                        Button(action: {
-                                                                            remove(index)
-                                                                        }) {
-                                                                            Image(systemName: "trash")
-                                                                                .foregroundColor(.red)
-                                                                        }
-                                                                        
-                                                                     
-                                                                       
-                                                                    
-                                                                    .padding()
-                                                                    .background(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
-                                                                    .cornerRadius(15)
+                                    VStack{
+                                        Button(action: {
+                                            remove(index)
+                                        }) {
+                                            Image(systemName: "trash")
+                                                .foregroundColor(.red)
+                                            
+                                            
+                                        }
+                                        .padding()
+                                        .background(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
+                                        .cornerRadius(15)
+                                        
+                                       
+                                        if checkIsMade(day: daysOfWeek[index]){
+                                            Image(systemName: "checkmark.seal.fill")
+                                                .padding(.vertical,10)
+                                        }else{
+                                            Image(systemName: "xmark.seal.fill")
+                                                .foregroundColor(.red)
+                                                .padding(.vertical,10)
+                                        }
+                                    }
                                                                     
                                                                         , alignment: .leading)
+                              
                                 .overlay(
                                     VStack{
                                         
@@ -53,7 +67,7 @@ struct ContentView: View {
                                             Spacer()
                                             Text("\(CheckWeekDay(day:daysOfWeek[index]))")
                                                 .foregroundColor(.black)
-                                                .font(.largeTitle)
+                                                .font(.system(.largeTitle,design: .serif))
                                                 .bold()
                                             Spacer()
                                             Image(systemName: "arrow.right")
@@ -73,21 +87,30 @@ struct ContentView: View {
                         }
                         
                     }
-                    .onReceive(timer){_ in
+                    .onReceive(DailyTimer){_ in
                         let calendar = Calendar.current
                         let today = Date()
                         let weekday = calendar.component(.weekday, from: today)
                         
-                        let weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+                        let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
                         
                         todayString = weekdays[weekday - 1]
+                    }
+                    .onReceive(weeklyTimer){_ in
+                        let EmptyMadeArray = [Day]()
+                        let saveKeyMade = "Made"
+                        
+                        if let encoded = try? JSONEncoder().encode(EmptyMadeArray){
+                            UserDefaults.standard.setValue(encoded, forKey: saveKeyMade)
+                        }
+                        loadMadeDays()
                     }
                     .onAppear{
                         let calendar = Calendar.current
                         let today = Date()
                         let weekday = calendar.component(.weekday, from: today)
                         
-                        let weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+                        let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
                         
                         todayString = weekdays[weekday - 1]
                     }
@@ -115,6 +138,7 @@ struct ContentView: View {
                                 .padding()
                         }
                         
+                        
                     }
                     
                     ToolbarItem(placement: .principal) {
@@ -124,7 +148,10 @@ struct ContentView: View {
                     }
                 
                             }
-            .onAppear(perform: load)
+            .onAppear{
+                load()
+                loadMadeDays()
+            }
             .preferredColorScheme(.dark)
                            
             
@@ -166,6 +193,28 @@ struct ContentView: View {
        
         }
     
+    
+    func loadMadeDays(){
+        let saveKeyMade = "Made"
+        
+        if let data = UserDefaults.standard.data(forKey: saveKeyMade){
+            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
+                madeDays = decoded
+            }
+         }
+    }
+    func checkIsMade(day:Day)-> Bool{
+        if madeDays.contains(where: {$0.id == day.id}){
+            return true
+        }else{
+            return false
+        }
+            
+    }
+    
+    
+    
+    
     func CheckWeekDay(day:Day) ->String{
         switch day.id{
         case 1:
@@ -195,6 +244,7 @@ struct ContentView: View {
             return false
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
