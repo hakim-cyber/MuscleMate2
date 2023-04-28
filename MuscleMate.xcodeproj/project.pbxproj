@@ -17,10 +17,11 @@
 		083607FB29F47B7300B75756 /* ExcerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607FA29F47B7300B75756 /* ExcerciseView.swift */; };
 		083607FD29F47E3800B75756 /* AddDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607FC29F47E3800B75756 /* AddDayView.swift */; };
 		0836080129F70B7400B75756 /* StartDayWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080029F70B7400B75756 /* StartDayWorkout.swift */; };
-		0836080329F873F800B75756 /* Fireworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080229F873F800B75756 /* Fireworks.swift */; };
 		0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080429F9505A00B75756 /* AnimatedBackground.swift */; };
-		0836080729FB0A7400B75756 /* AllExcercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080629FB0A7300B75756 /* AllExcercisesView.swift */; };
+		0836080729FB0A7400B75756 /* StructExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080629FB0A7300B75756 /* StructExercise.swift */; };
 		0836080A29FB2E3100B75756 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0836080929FB2E3100B75756 /* SDWebImageSwiftUI */; };
+		0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */; };
+		0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +36,10 @@
 		083607FA29F47B7300B75756 /* ExcerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcerciseView.swift; sourceTree = "<group>"; };
 		083607FC29F47E3800B75756 /* AddDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDayView.swift; sourceTree = "<group>"; };
 		0836080029F70B7400B75756 /* StartDayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayWorkout.swift; sourceTree = "<group>"; };
-		0836080229F873F800B75756 /* Fireworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fireworks.swift; sourceTree = "<group>"; };
 		0836080429F9505A00B75756 /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
-		0836080629FB0A7300B75756 /* AllExcercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExcercisesView.swift; sourceTree = "<group>"; };
+		0836080629FB0A7300B75756 /* StructExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructExercise.swift; sourceTree = "<group>"; };
+		0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ContentView-ViewModel.swift"; path = "../../../../../../Applications/ContentView-ViewModel.swift"; sourceTree = "<group>"; };
+		0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,10 +57,9 @@
 		083607DA29F42AA600B75756 = {
 			isa = PBXGroup;
 			children = (
-				0836080629FB0A7300B75756 /* AllExcercisesView.swift */,
+				0836080629FB0A7300B75756 /* StructExercise.swift */,
 				0836080429F9505A00B75756 /* AnimatedBackground.swift */,
 				0836080029F70B7400B75756 /* StartDayWorkout.swift */,
-				0836080229F873F800B75756 /* Fireworks.swift */,
 				083607E529F42AA600B75756 /* MuscleMate */,
 				083607E429F42AA600B75756 /* Products */,
 			);
@@ -77,8 +78,10 @@
 			children = (
 				083607E629F42AA600B75756 /* MuscleMateApp.swift */,
 				083607E829F42AA600B75756 /* ContentView.swift */,
+				0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */,
 				083607FC29F47E3800B75756 /* AddDayView.swift */,
 				083607F829F4344500B75756 /* DayView.swift */,
+				0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */,
 				083607FA29F47B7300B75756 /* ExcerciseView.swift */,
 				083607F629F42D4E00B75756 /* Days.swift */,
 				083607F429F42B1800B75756 /* Colors.swift */,
@@ -172,15 +175,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0836080729FB0A7400B75756 /* AllExcercisesView.swift in Sources */,
+				0836080729FB0A7400B75756 /* StructExercise.swift in Sources */,
 				083607E929F42AA600B75756 /* ContentView.swift in Sources */,
 				083607F929F4344500B75756 /* DayView.swift in Sources */,
 				0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */,
+				0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */,
 				083607FB29F47B7300B75756 /* ExcerciseView.swift in Sources */,
 				083607FD29F47E3800B75756 /* AddDayView.swift in Sources */,
 				083607F529F42B1800B75756 /* Colors.swift in Sources */,
+				0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */,
 				083607F729F42D4E00B75756 /* Days.swift in Sources */,
-				0836080329F873F800B75756 /* Fireworks.swift in Sources */,
 				083607E729F42AA600B75756 /* MuscleMateApp.swift in Sources */,
 				0836080129F70B7400B75756 /* StartDayWorkout.swift in Sources */,
 			);

@@ -9,13 +9,7 @@ import SwiftUI
 import UserNotifications
 
 struct ContentView: View {
-    @State var  daysOfWeek = [Day]()
-    
-
-    @State var showAdd = false
-    @State var madeDays = [Day]()
-    
-    @State var  todayString = ""
+    @ObservedObject var viewModel = ContentView_ViewModel()
     
     let DailyTimer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
     let weeklyTimer = Timer.publish(every: 86400 * 7, on: .current, in: .common).autoconnect()
@@ -24,19 +18,19 @@ struct ContentView: View {
         NavigationView{
             ScrollView{
                 VStack(alignment: .leading){
-                    ForEach(Array(daysOfWeek.indices).sorted{daysOfWeek[$0].id < daysOfWeek[$1].id  } , id:\.self) { index in
+                    ForEach(Array(viewModel.daysOfWeek.indices).sorted{viewModel.daysOfWeek[$0].id < viewModel.daysOfWeek[$1].id  } , id:\.self) { index in
                         
-                        NavigationLink(destination:DayView(day: $daysOfWeek[index]){
-                            save()
-                            load()
+                        NavigationLink(destination:DayView(day: $viewModel.daysOfWeek[index]){
+                            viewModel.save()
+                            viewModel.load()
                         }.preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
-                                .fill(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
+                                .fill(viewModel.checkToday(day: viewModel.CheckWeekDay(day: viewModel.daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
                                 .frame(width: 350,height: 150)
                                 .overlay(
                                     VStack{
                                         Button(action: {
-                                            remove(index)
+                                            viewModel.remove(index)
                                         }) {
                                             Image(systemName: "trash")
                                                 .foregroundColor(.red)
@@ -44,11 +38,11 @@ struct ContentView: View {
                                             
                                         }
                                         .padding()
-                                        .background(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
+                                        .background(viewModel.checkToday(day: viewModel.CheckWeekDay(day: viewModel.daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
                                         .cornerRadius(15)
                                         
                                        
-                                        if checkIsMade(day: daysOfWeek[index]){
+                                        if viewModel.checkIsMade(day: viewModel.daysOfWeek[index]){
                                             Image(systemName: "checkmark.seal.fill")
                                                 .padding(.vertical,10)
                                         }else{
@@ -65,7 +59,7 @@ struct ContentView: View {
                                         
                                         HStack{
                                             Spacer()
-                                            Text("\(CheckWeekDay(day:daysOfWeek[index]))")
+                                            Text("\(viewModel.CheckWeekDay(day:viewModel.daysOfWeek[index]))")
                                                 .foregroundColor(.black)
                                                 .font(.system(.largeTitle,design: .serif))
                                                 .bold()
@@ -79,7 +73,7 @@ struct ContentView: View {
                                         
                                         }
                                  Spacer()
-                                        Text("\(calculateCountOfExcercises(day:daysOfWeek[index])) Excersices")
+                                        Text("\(viewModel.calculateCountOfExcercises(day:viewModel.daysOfWeek[index])) Excersices")
                                             .foregroundColor(.black.opacity(0.9))
                                             
                                     }
@@ -91,13 +85,7 @@ struct ContentView: View {
                         
                     }
                     .onReceive(DailyTimer){_ in
-                        let calendar = Calendar.current
-                        let today = Date()
-                        let weekday = calendar.component(.weekday, from: today)
-                        
-                        let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-                        
-                        todayString = weekdays[weekday - 1]
+                        viewModel.defineTodayString()
                     }
                     .onReceive(weeklyTimer){_ in
                         let EmptyMadeArray = [Day]()
@@ -106,23 +94,18 @@ struct ContentView: View {
                         if let encoded = try? JSONEncoder().encode(EmptyMadeArray){
                             UserDefaults.standard.setValue(encoded, forKey: saveKeyMade)
                         }
-                        loadMadeDays()
+                        viewModel.loadMadeDays()
                     }
                     .onAppear{
-                        let calendar = Calendar.current
-                        let today = Date()
-                        let weekday = calendar.component(.weekday, from: today)
-                        
-                        let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-                        
-                        todayString = weekdays[weekday - 1]
+                        viewModel.defineTodayString()
                     }
+                   
                    
                 }
                 .padding(40)
                 
             }
-            .sheet(isPresented: $showAdd,onDismiss: load){
+            .sheet(isPresented: $viewModel.showAdd,onDismiss: viewModel.load){
                 AddDayView()
                     .preferredColorScheme(.dark)
             }
@@ -131,7 +114,7 @@ struct ContentView: View {
                    
                         Button {
                             withAnimation {
-                                showAdd = true
+                                viewModel.showAdd = true
                             }
                             
                         }label:{
@@ -152,9 +135,9 @@ struct ContentView: View {
                 
                             }
             .onAppear{
-                load()
-                loadMadeDays()
-                loadAllExcercises()
+                viewModel.load()
+                viewModel.loadMadeDays()
+                viewModel.loadAllExcercises()
             }
             .preferredColorScheme(.dark)
                            
@@ -162,130 +145,7 @@ struct ContentView: View {
         }
     }
     
-    func calculateCountOfExcercises(day:Day)->Int{
-        var count = 0
-        
-        for muscle in day.muscles{
-            count += muscle.exercises.count
-        }
-        return count
-        
-    }
-    func load(){
-        if let data = UserDefaults.standard.data(forKey: Day.saveKey){
-            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
-                daysOfWeek = decoded
-            }
-        }
-    }
     
-    func save(){
-        if let encoded = try? JSONEncoder().encode(daysOfWeek){
-            UserDefaults.standard.set(encoded, forKey: Day.saveKey)
-        }
-    }
-    
-    func remove(_ index: Int){
-        let center = UNUserNotificationCenter.current()
-        
-        let identifier = "workout-\(daysOfWeek[index].id)"
-        center.removePendingNotificationRequests(withIdentifiers: [identifier])
-        
-            daysOfWeek.remove(at: index)
-            save()
-        
-       
-        }
-    
-    
-    func loadMadeDays(){
-        let saveKeyMade = "Made"
-        
-        if let data = UserDefaults.standard.data(forKey: saveKeyMade){
-            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
-                madeDays = decoded
-            }
-         }
-    }
-    func checkIsMade(day:Day)-> Bool{
-        if madeDays.contains(where: {$0.id == day.id}){
-            return true
-        }else{
-            return false
-        }
-            
-    }
-    
-    
-    
-    
-    func CheckWeekDay(day:Day) ->String{
-        switch day.id{
-        case 1:
-            return "Monday"
-        case 2:
-            return "Tuesday"
-        case 3:
-            return "Wednesday"
-        case 4:
-            return "Thursday"
-        case 5:
-            return "Friday"
-        case 6:
-            return "Saturday"
-        case 7:
-            return "Sunday"
-       
-            
-        default:
-            return "Day of Week"
-        }
-    }
-    func checkToday(day:String)->Bool{
-        if day == todayString{
-            return true
-        }else{
-            return false
-        }
-    }
-    func loadAllExcercises(){
-        let saveKeyExercises = "exercises"
-        var exercises = [ExerciseApi]()
-        
-        if let savedData = UserDefaults.standard.data(forKey: saveKeyExercises){
-            // if value nothing to do
-        }else{
-            let headers = [
-                "content-type": "application/octet-stream",
-                "X-RapidAPI-Key": "d3be8ad012mshea31fdf3fc52d3bp18251bjsn0ff8b0e32a60",
-                "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
-            ]
-            
-            guard let url = URL(string: "https://exercisedb.p.rapidapi.com/exercises") else{return}
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.allHTTPHeaderFields = headers
-            
-            
-            
-            
-            URLSession.shared.dataTask(with: request as URLRequest){data,_,error in
-                guard let data = data else{return}
-                if let decoded = try?JSONDecoder().decode([ExerciseApi].self, from: data){
-                    DispatchQueue.main.async {
-                        exercises = decoded
-                        print(exercises.first?.name)
-                        if let encoded = try? JSONEncoder().encode(exercises){
-                            UserDefaults.standard.set(encoded, forKey: saveKeyExercises)
-                        }
-                    }
-                    
-                }
-            }.resume()
-            
-        }
-    }
   
     
 }
