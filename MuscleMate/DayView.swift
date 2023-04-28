@@ -20,32 +20,18 @@ import SwiftUI
  */
 
 struct DayView: View {
-    @Binding var day:Day
-    var change: (() -> Void)? = nil
-    @State var days = [Day]()
+    @ObservedObject var viewModel:DayView_viewModel
+   
     
-    @State var availibleMuscles = ["back",
-                                   "cardio",
-                                   "chest",
-                                   "lower arms",
-                                   "lower legs",
-                                   "neck",
-                                   "shoulders",
-                                   "upper arms",
-                                   "upper legs",
-                                   "waist"]
-    @State var pickedMuscle = "back"
-    
-    @State var showadding =  false
-    @State var ShowStartWorkout = false
+   
     var body: some View {
         VStack{
-            if showadding{
-                if availibleMuscles.count != 0{
+            if viewModel.showadding{
+                if viewModel.availibleMuscles.count != 0{
                     HStack{
                         
-                        Picker("", selection: $pickedMuscle) {
-                            ForEach(availibleMuscles, id: \.self) { muscle in
+                        Picker("", selection: $viewModel.pickedMuscle) {
+                            ForEach(viewModel.availibleMuscles, id: \.self) { muscle in
                                 Text(muscle.uppercased())
                                     .foregroundColor(Color.openGreen)
                             }
@@ -54,7 +40,7 @@ struct DayView: View {
                         .padding()
                         
                         Spacer()
-                        Text("\(pickedMuscle.uppercased())")
+                        Text("\(viewModel.pickedMuscle.uppercased())")
                             .font(.system(size: 20))
                             .padding()
                     }
@@ -62,22 +48,22 @@ struct DayView: View {
                     HStack{
                         Spacer()
                         Button("Add Muscle"){
-                            let muscle = Muscle(muscle: pickedMuscle.uppercased(), exercises: [ExerciseApi]())
+                            let muscle = Muscle(muscle: viewModel.pickedMuscle.uppercased(), exercises: [ExerciseApi]())
                             withAnimation {
-                                day.muscles.append(muscle)
+                                viewModel.day.muscles.append(muscle)
                                 
                             }
-                            self.change?()
+                            self.viewModel.change()
                             
-                            let newAvailible =   availibleMuscles.filter{$0 != pickedMuscle}
-                            availibleMuscles = newAvailible
+                            let newAvailible =   viewModel.availibleMuscles.filter{$0 != viewModel.pickedMuscle}
+                            viewModel.availibleMuscles = newAvailible
                             
                         }
                         Spacer()
                     }
-                    .onChange(of: availibleMuscles){newArray in
+                    .onChange(of: viewModel.availibleMuscles){newArray in
                         if !newArray.isEmpty{
-                            pickedMuscle = newArray[0]
+                            viewModel.pickedMuscle = newArray[0]
                         }
                     }
                 }else{
@@ -93,13 +79,13 @@ struct DayView: View {
                 
                 
                 VStack(alignment: .leading){
-                    ForEach(Array(day.muscles.indices),id:\.self){index in
-                        NavigationLink(destination:ExcerciseView(muscle: $day.muscles[index]){
-                            self.change?()
+                    ForEach(Array(viewModel.day.muscles.indices),id:\.self){index in
+                        NavigationLink(destination:ExcerciseView(muscle: $viewModel.day.muscles[index]){
+                            self.viewModel.change()
                         }.preferredColorScheme(.dark) ){
                             HStack{
                                 Button(action: {
-                                    remove(index: index)
+                                    viewModel.remove(index: index)
                                 }) {
                                     Image(systemName: "trash")
                                         .foregroundColor(.red)
@@ -117,7 +103,7 @@ struct DayView: View {
                                                 Spacer()
                                                 VStack{
                                                     Spacer()
-                                                    Text("\(day.muscles[index].muscle)")
+                                                    Text("\(viewModel.day.muscles[index].muscle)")
                                                         .foregroundColor(.white)
                                                         .font(.system(.largeTitle,design: .serif))
                                                         .bold()
@@ -131,7 +117,7 @@ struct DayView: View {
                                                 
                                             }
                                             Spacer()
-                                            Text("\(day.muscles[index].exercises.count) Excersices")
+                                            Text("\(viewModel.day.muscles[index].exercises.count) Excersices")
                                                 .foregroundColor(.white)
                                                 .font(.system(.callout,design: .rounded))
                                         }
@@ -146,25 +132,25 @@ struct DayView: View {
                 .padding(40)
             }
         }
-        .fullScreenCover(isPresented: $ShowStartWorkout){
-            StartDayWorkout(day: day)
+        .fullScreenCover(isPresented: $viewModel.ShowStartWorkout){
+            StartDayWorkout(day: viewModel.day)
                 .preferredColorScheme(.light)
         }
             .toolbar{
                 HStack{
                     
-                    Text("~\(estimatedTimeForWorkout / 60) mins")
+                    Text("~\(viewModel.estimatedTimeForWorkout / 60) mins")
                         .foregroundColor(.gray)
                     Button{
                         withAnimation{
-                            ShowStartWorkout = true
+                            viewModel.ShowStartWorkout = true
                         }
                     }label:{
                         Label("Start",systemImage: "play.circle")
                             .labelStyle(.titleAndIcon)
                             .foregroundColor(Color.openGreen)
                     }
-                    .disabled(day.muscles.isEmpty)
+                    .disabled(viewModel.day.muscles.isEmpty)
                   
                     
                     
@@ -173,13 +159,13 @@ struct DayView: View {
                
                 Button{
                     withAnimation {
-                        showadding.toggle()
+                        viewModel.showadding.toggle()
                     }
                    
                    
                 }label:{
                 
-                    if showadding == false{
+                    if viewModel.showadding == false{
                         Image(systemName: "plus.circle")
                     }else{
                         Image(systemName: "minus.circle")
@@ -188,66 +174,20 @@ struct DayView: View {
                 .foregroundColor(Color.openGreen)
             }
             
-            .onAppear(perform:newAvailible)
+            .onAppear(perform:viewModel.newAvailible)
         
     }
        
-    func load(){
-        if let data = UserDefaults.standard.data(forKey: Day.saveKey){
-            if let decoded = try? JSONDecoder().decode([Day].self, from: data){
-                days = decoded
-                
-                  
-                
-            }
-        }
-    }
-    func save(){
-        if let encoded = try? JSONEncoder().encode(days){
-            UserDefaults.standard.set(encoded, forKey: Day.saveKey)
-        }
-    }
-    func newAvailible(){
-       var  usedMuscles = [String]()
-        for muscle in day.muscles{
-            usedMuscles.append(muscle.muscle.lowercased())
-        }
-        availibleMuscles = availibleMuscles.filter{!(usedMuscles.contains($0))}
-        if !availibleMuscles.isEmpty{
-            pickedMuscle = availibleMuscles[0]
-        }
-    }
-    func remove(index:Int){
-        day.muscles.remove(at: index)
-        change?()
-    }
-    var estimatedTimeForWorkout:Int{
-        var setsCount = 0
-        for muscle in day.muscles {
-            for excercise in muscle.exercises{
-                setsCount += excercise.sets!
-            }
-        }
-        
-        let estimatedTime = setsCount * 120 + (setsCount - 1) * 120
-        if estimatedTime > 0{
-            return estimatedTime
-        }else{
-            return 0
-        }
-    }
-    var estimatedCalories:String{
-        var estimatedInHours = Double(estimatedTimeForWorkout) / 3600
-        return String(format: "%.1f", estimatedInHours * 300)
-    }
+   
 }
 
 struct DayView_Previews: PreviewProvider {
     @State static var day = Day(id: 4, muscles: [Muscle(muscle: "Back", exercises: [ExerciseApi.defaultExercise])])
     
     static var previews: some View {
+        var dayViewodel = DayView_viewModel(day: $day,change: {})
         NavigationView{
-            DayView(day: $day)
+            DayView(viewModel: dayViewodel)
                 .preferredColorScheme(.dark)
         }
     }

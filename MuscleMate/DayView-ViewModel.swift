@@ -11,7 +11,7 @@ import SwiftUI
 
 class DayView_viewModel:ObservableObject {
     @Binding var day:Day
-    var change: (() -> Void)? = nil
+    var change: () -> Void
     
     @Published var days = [Day]()
     
@@ -30,8 +30,9 @@ class DayView_viewModel:ObservableObject {
     @Published var showadding =  false
     @Published var ShowStartWorkout = false
     
-    init(day: Binding<Day>)  {
+    init(day: Binding<Day>, change: @escaping () -> Void)  {
         self._day = day
+        self.change = change
     }
     
     func save(){
@@ -53,7 +54,7 @@ class DayView_viewModel:ObservableObject {
     
     func remove(index:Int){
         day.muscles.remove(at: index)
-        change?()
+        change()
     }
     
     

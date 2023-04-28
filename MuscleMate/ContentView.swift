@@ -19,11 +19,12 @@ struct ContentView: View {
             ScrollView{
                 VStack(alignment: .leading){
                     ForEach(Array(viewModel.daysOfWeek.indices).sorted{viewModel.daysOfWeek[$0].id < viewModel.daysOfWeek[$1].id  } , id:\.self) { index in
-                        
-                        NavigationLink(destination:DayView(day: $viewModel.daysOfWeek[index]){
+                        var dayViewModel = DayView_viewModel(day: $viewModel.daysOfWeek[index],change: {
                             viewModel.save()
                             viewModel.load()
-                        }.preferredColorScheme(.dark) ){
+                        })
+
+                        NavigationLink(destination:DayView(viewModel: dayViewModel).preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(viewModel.checkToday(day: viewModel.CheckWeekDay(day: viewModel.daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
                                 .frame(width: 350,height: 150)
