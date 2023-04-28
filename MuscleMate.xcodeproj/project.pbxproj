@@ -20,6 +20,7 @@
 		0836080329F873F800B75756 /* Fireworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080229F873F800B75756 /* Fireworks.swift */; };
 		0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080429F9505A00B75756 /* AnimatedBackground.swift */; };
 		0836080729FB0A7400B75756 /* AllExcercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080629FB0A7300B75756 /* AllExcercisesView.swift */; };
+		0836080A29FB2E3100B75756 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0836080929FB2E3100B75756 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0836080A29FB2E3100B75756 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +112,9 @@
 			dependencies = (
 			);
 			name = MuscleMate;
+			packageProductDependencies = (
+				0836080929FB2E3100B75756 /* SDWebImageSwiftUI */,
+			);
 			productName = MuscleMate;
 			productReference = 083607E329F42AA600B75756 /* MuscleMate.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +143,9 @@
 				Base,
 			);
 			mainGroup = 083607DA29F42AA600B75756;
+			packageReferences = (
+				0836080829FB2E3100B75756 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 083607E429F42AA600B75756 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -377,6 +385,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0836080829FB2E3100B75756 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0836080929FB2E3100B75756 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0836080829FB2E3100B75756 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 083607DB29F42AA600B75756 /* Project object */;
 }

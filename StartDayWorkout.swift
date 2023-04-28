@@ -81,30 +81,72 @@ struct StartDayWorkout: View {
                                             }
                                             
                                         }label: {
-                                            VStack{
-                                              
+                                            
+                                            VStack(spacing: 50){
+                                                RoundedRectangle(cornerRadius: 15)
+                                                      .fill(Color.openGreen)
+                                                      .frame(width: 350,height:80)
+                                                      .overlay(
+                                                          HStack{
+                                                             
+                                                                  Text("\(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatCount!) x \(!allExcercises.isEmpty ?  allExcercises[excercisesIndex].sets!:0) ")
+                                                                      .foregroundColor(.black)
+                                                                      .font(.system(.largeTitle,design: .rounded))
+                                                                      .padding(.horizontal,30)
+                                                                 
+                                                                  Divider()
+                                                                      .bold()
+                                                                     
+                                                                  
+                                                              VStack(alignment: .center){
+                                                                  Text( "\(!allExcercises.isEmpty ?  allExcercises[excercisesIndex].equipment.uppercased() :"")")
+                                                                      .foregroundColor(.black)
+                                                                      .font(.system(.headline,design: .serif))
+                                                                      .padding(.horizontal,20)
+                                                                  Text("\(!allExcercises.isEmpty ?  allExcercises[excercisesIndex].target.uppercased() : "")")
+                                                                      .foregroundColor(.black)
+                                                                      .font(.system(.headline,design: .serif))
+                                                                      .padding(.horizontal,20)
+                                                                      .padding(.vertical,5)
+                                                              }
+                                                          }
+                                                          ,alignment:.center)
+                                                      .padding(.vertical,10)
+                                                    
+                                                
+                                             
+                                                ProgressView(value: Float(excercisesIndex),total:Float(allExcercises.count))
+                                                    .scaleEffect(1.5, anchor: .center)
+                                                .padding(.horizontal,16)
+                                                .tint(Color.openGreen)
                                                     if !startRest{
-                                                        Image(systemName: "play.circle")
-                                                            .padding(10)
-                                                            .foregroundColor(Color.openGreen)
-                                                            .background(Color.black)
-                                                            .clipShape(Circle())
-                                                            .font(.system(size: 80))
-                                                            .padding()
+                                                    
+                                                            Image(systemName: "play.circle")                                                          .foregroundColor(Color.openGreen)
+                                                                .background(Color.black)
+                                                                .clipShape(Circle())
+                                                                .font(.system(size: 80))
+                                                                .padding()
+                                                          
                                                         
-                                                        Text("Next")
-                                                            .foregroundColor(Color.openGreen)
+                                                        
                                                     }else{
                                                       Image(systemName: "stop.circle")
-                                                            .padding(10)
                                                             .foregroundColor(Color.openGreen)
                                                             .background(Color.black)
                                                             .clipShape(Circle())
                                                             .font(.system(size: 80))
                                                             .padding()
-                                                        Text("Stop Rest")
-                                                            .foregroundColor(Color.openGreen)
+                                                           
+                                                       
+                                                        
+                                                        
+                                                        
                                                     }
+                                                
+                                             
+                                             
+                                              
+                                                
                                                 
                                             }
                                         }
@@ -136,25 +178,12 @@ struct StartDayWorkout: View {
                         }
                         
                     }
-                    .frame(width: 390,height: 300)
+                    .frame(width: 390,height: 350)
                     .background(Color.black)
                     .background(Color.openGreen)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .overlay(
-                    Text("Reps \(allExcercises.isEmpty ? 0 : allExcercises[excercisesIndex].repeatCount!)")
-                        .padding()
-                        .foregroundColor(Color.openGreen)
-                        .font(.system(size: 25))
-                        .bold()
-                        ,alignment:.topLeading)
-                    .overlay(
-                        Text("Set \((!allExcercises.isEmpty) ?  allExcercises[excercisesIndex].sets! - setsCountRemaining + 1 : 0) / \((!allExcercises.isEmpty) ? allExcercises[excercisesIndex].sets! : 0)")
-                        .padding()
-                        .foregroundColor(Color.openGreen)
-                        .font(.system(size: 25))
-                        .bold()
-                        ,alignment:.topTrailing)
-                    .padding(.vertical,30)
+                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                   
+                
                  
                    
                 }
@@ -184,11 +213,38 @@ struct StartDayWorkout: View {
                     }
                     
                 }
+                ToolbarItem(placement: .navigationBarTrailing){
+                    
+                    HStack{
+                        Image(systemName: "flame.circle.fill")
+                            .foregroundColor(.orange)
+                        Text("\(estimatedCalories) KCAL")
+                    }
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             
         }
        
+    }
+    var estimatedTimeForWorkout:Int{
+        var setsCount = 0
+        for muscle in day.muscles {
+            for excercise in muscle.exercises{
+                setsCount += excercise.sets!
+            }
+        }
+        
+        let estimatedTime = setsCount * 120 + (setsCount - 1) * 120
+        if estimatedTime > 0{
+            return estimatedTime
+        }else{
+            return 0
+        }
+    }
+    var estimatedCalories:String{
+        var estimatedInHours = Double(estimatedTimeForWorkout) / 3600
+        return String(format: "%.1f", estimatedInHours * 300)
     }
     
     var allExcercises:[ExerciseApi]{

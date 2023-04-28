@@ -32,7 +32,7 @@ struct ContentView: View {
                         }.preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(checkToday(day: CheckWeekDay(day: daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
-                                .frame(width: 400,height: 150)
+                                .frame(width: 350,height: 150)
                                 .overlay(
                                     VStack{
                                         Button(action: {
@@ -69,10 +69,13 @@ struct ContentView: View {
                                                 .foregroundColor(.black)
                                                 .font(.system(.largeTitle,design: .serif))
                                                 .bold()
-                                            Spacer()
-                                            Image(systemName: "arrow.right")
-                                                .foregroundColor(.black)
-                                              
+                                          Spacer()
+                                            VStack{
+                                                Image(systemName: "arrow.right")
+                                                    .foregroundColor(.black)
+                                                    .padding(.vertical,8)
+                                               
+                                            }
                                         
                                         }
                                  Spacer()
@@ -283,6 +286,7 @@ struct ContentView: View {
             
         }
     }
+  
     
 }
 

@@ -152,6 +152,7 @@ struct DayView: View {
         }
             .toolbar{
                 HStack{
+                    
                     Text("~\(estimatedTimeForWorkout / 60) mins")
                         .foregroundColor(.gray)
                     Button{
@@ -227,9 +228,17 @@ struct DayView: View {
                 setsCount += excercise.sets!
             }
         }
-       var estimatedTime = setsCount * 120 + (setsCount - 1) * 120
         
-        return estimatedTime
+        let estimatedTime = setsCount * 120 + (setsCount - 1) * 120
+        if estimatedTime > 0{
+            return estimatedTime
+        }else{
+            return 0
+        }
+    }
+    var estimatedCalories:String{
+        var estimatedInHours = Double(estimatedTimeForWorkout) / 3600
+        return String(format: "%.1f", estimatedInHours * 300)
     }
 }
 
