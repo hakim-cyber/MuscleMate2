@@ -7,9 +7,13 @@
 
 import SwiftUI
 import UserNotifications
+import CoreData
 
 struct ContentView: View {
     @ObservedObject var viewModel = ContentView_ViewModel()
+    
+
+    
     
     let DailyTimer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
     let weeklyTimer = Timer.publish(every: 86400 * 7, on: .current, in: .common).autoconnect()

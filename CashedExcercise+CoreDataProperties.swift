@@ -16,7 +16,7 @@ extension CashedExcercise {
         return NSFetchRequest<CashedExcercise>(entityName: "CashedExcercise")
     }
 
-    @NSManaged public var id: UUID?
+    @NSManaged public var id: String?
     @NSManaged public var name: String?
     @NSManaged public var repeatsCount: Int16
     @NSManaged public var setsCount: Int16
@@ -45,7 +45,9 @@ extension CashedExcercise {
     
     override public func awakeFromInsert() {
         super.awakeFromInsert()
-        setPrimitiveValue(UUID(), forKey: "id")
+        
+        setPrimitiveValue(Int16(0), forKey: "repeatsCount")
+        setPrimitiveValue(Int16(0), forKey: "setsCount")
     }
    
 }
