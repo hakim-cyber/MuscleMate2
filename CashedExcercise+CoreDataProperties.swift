@@ -43,6 +43,10 @@ extension CashedExcercise {
         target ?? "Unknown"
     }
     
+    override public func awakeFromInsert() {
+        super.awakeFromInsert()
+        setPrimitiveValue(UUID(), forKey: "id")
+    }
    
 }
 
