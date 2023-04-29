@@ -17,6 +17,7 @@ struct ContentView: View {
     
     let DailyTimer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
     let weeklyTimer = Timer.publish(every: 86400 * 7, on: .current, in: .common).autoconnect()
+
     
     var body: some View {
         NavigationView{
