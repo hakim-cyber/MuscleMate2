@@ -25,6 +25,13 @@
 		0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */; };
 		0836081229FD9A2400B75756 /* ExerciseView-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081129FD9A2400B75756 /* ExerciseView-Model.swift */; };
 		0836081529FD9E0E00B75756 /* DaysDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0836081329FD9E0E00B75756 /* DaysDataModel.xcdatamodeld */; };
+		0836081729FDA63200B75756 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081629FDA63200B75756 /* DataController.swift */; };
+		0836081E29FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081829FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift */; };
+		0836081F29FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081929FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift */; };
+		0836082029FDA95C00B75756 /* CashedExcercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081A29FDA95C00B75756 /* CashedExcercise+CoreDataClass.swift */; };
+		0836082129FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081B29FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift */; };
+		0836082229FDA95C00B75756 /* CashedDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081C29FDA95C00B75756 /* CashedDay+CoreDataClass.swift */; };
+		0836082329FDA95C00B75756 /* CashedDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081D29FDA95C00B75756 /* CashedDay+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +53,13 @@
 		0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkButtonStyle.swift; sourceTree = "<group>"; };
 		0836081129FD9A2400B75756 /* ExerciseView-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseView-Model.swift"; sourceTree = "<group>"; };
 		0836081429FD9E0E00B75756 /* DaysDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysDataModel.xcdatamodel; sourceTree = "<group>"; };
+		0836081629FDA63200B75756 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		0836081829FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedMuscle+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0836081929FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedMuscle+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0836081A29FDA95C00B75756 /* CashedExcercise+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedExcercise+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0836081B29FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedExcercise+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0836081C29FDA95C00B75756 /* CashedDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedDay+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0836081D29FDA95C00B75756 /* CashedDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CashedDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +77,14 @@
 		083607DA29F42AA600B75756 = {
 			isa = PBXGroup;
 			children = (
+				0836081829FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift */,
+				0836081929FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift */,
+				0836081A29FDA95C00B75756 /* CashedExcercise+CoreDataClass.swift */,
+				0836081B29FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift */,
+				0836081C29FDA95C00B75756 /* CashedDay+CoreDataClass.swift */,
+				0836081D29FDA95C00B75756 /* CashedDay+CoreDataProperties.swift */,
 				0836081329FD9E0E00B75756 /* DaysDataModel.xcdatamodeld */,
+				0836081629FDA63200B75756 /* DataController.swift */,
 				0836080629FB0A7300B75756 /* StructExercise.swift */,
 				0836080429F9505A00B75756 /* AnimatedBackground.swift */,
 				0836080029F70B7400B75756 /* StartDayWorkout.swift */,
@@ -188,17 +209,24 @@
 				083607E929F42AA600B75756 /* ContentView.swift in Sources */,
 				083607F929F4344500B75756 /* DayView.swift in Sources */,
 				0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */,
+				0836081F29FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift in Sources */,
 				0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */,
 				083607FB29F47B7300B75756 /* ExcerciseView.swift in Sources */,
+				0836082229FDA95C00B75756 /* CashedDay+CoreDataClass.swift in Sources */,
 				0836081529FD9E0E00B75756 /* DaysDataModel.xcdatamodeld in Sources */,
 				083607FD29F47E3800B75756 /* AddDayView.swift in Sources */,
+				0836081E29FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift in Sources */,
 				083607F529F42B1800B75756 /* Colors.swift in Sources */,
 				0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */,
 				0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */,
+				0836082329FDA95C00B75756 /* CashedDay+CoreDataProperties.swift in Sources */,
+				0836082129FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift in Sources */,
 				083607F729F42D4E00B75756 /* Days.swift in Sources */,
 				083607E729F42AA600B75756 /* MuscleMateApp.swift in Sources */,
+				0836081729FDA63200B75756 /* DataController.swift in Sources */,
 				0836081229FD9A2400B75756 /* ExerciseView-Model.swift in Sources */,
 				0836080129F70B7400B75756 /* StartDayWorkout.swift in Sources */,
+				0836082029FDA95C00B75756 /* CashedExcercise+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
