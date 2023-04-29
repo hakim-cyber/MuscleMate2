@@ -86,6 +86,7 @@ struct StartDayWorkout: View {
                                                 RoundedRectangle(cornerRadius: 15)
                                                       .fill(Color.openGreen)
                                                       .frame(width: 350,height:80)
+                                                      .shadow(color: Color.openGreen,radius: 15)
                                                       .overlay(
                                                           HStack{
                                                              
@@ -119,6 +120,7 @@ struct StartDayWorkout: View {
                                                     .scaleEffect(1.5, anchor: .center)
                                                 .padding(.horizontal,16)
                                                 .tint(Color.openGreen)
+                                                .shadow(color: Color.openGreen,radius: 10)
                                                     if !startRest{
                                                     
                                                             Image(systemName: "play.circle")                                                          .foregroundColor(Color.openGreen)
@@ -126,7 +128,7 @@ struct StartDayWorkout: View {
                                                                 .clipShape(Circle())
                                                                 .font(.system(size: 80))
                                                                 .padding()
-                                                          
+                                                                .shadow(color: Color.openGreen,radius: 20)
                                                         
                                                         
                                                     }else{
@@ -136,7 +138,7 @@ struct StartDayWorkout: View {
                                                             .clipShape(Circle())
                                                             .font(.system(size: 80))
                                                             .padding()
-                                                           
+                                                            .shadow(color: Color.openGreen,radius: 20)
                                                        
                                                         
                                                         
@@ -182,6 +184,7 @@ struct StartDayWorkout: View {
                     .background(Color.black)
                     .background(Color.openGreen)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
+                    .shadow(color: Color.black,radius: 30)
                    
                 
                  
@@ -210,6 +213,7 @@ struct StartDayWorkout: View {
                     }label: {
                         Label("Quit", systemImage: "arrow.left")
                             .labelStyle(.titleAndIcon)
+                            .foregroundColor(.black)
                     }
                     
                 }
