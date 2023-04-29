@@ -115,6 +115,8 @@ struct StartDayWorkout: View {
                                                       .padding(.vertical,10)
                                                     
                                                 
+                                                
+                                                
                                              
                                                 ProgressView(value: Float(excercisesIndex),total:Float(allExcercises.count))
                                                     .scaleEffect(1.5, anchor: .center)
