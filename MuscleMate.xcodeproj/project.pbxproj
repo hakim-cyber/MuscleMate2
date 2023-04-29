@@ -23,6 +23,8 @@
 		0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */; };
 		0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */; };
 		0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */; };
+		0836081229FD9A2400B75756 /* ExerciseView-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081129FD9A2400B75756 /* ExerciseView-Model.swift */; };
+		0836081529FD9E0E00B75756 /* DaysDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0836081329FD9E0E00B75756 /* DaysDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ContentView-ViewModel.swift"; path = "../../../../../../Applications/ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 		0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayView-ViewModel.swift"; sourceTree = "<group>"; };
 		0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkButtonStyle.swift; sourceTree = "<group>"; };
+		0836081129FD9A2400B75756 /* ExerciseView-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseView-Model.swift"; sourceTree = "<group>"; };
+		0836081429FD9E0E00B75756 /* DaysDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysDataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,7 @@
 		083607DA29F42AA600B75756 = {
 			isa = PBXGroup;
 			children = (
+				0836081329FD9E0E00B75756 /* DaysDataModel.xcdatamodeld */,
 				0836080629FB0A7300B75756 /* StructExercise.swift */,
 				0836080429F9505A00B75756 /* AnimatedBackground.swift */,
 				0836080029F70B7400B75756 /* StartDayWorkout.swift */,
@@ -86,6 +91,7 @@
 				083607F829F4344500B75756 /* DayView.swift */,
 				0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */,
 				083607FA29F47B7300B75756 /* ExcerciseView.swift */,
+				0836081129FD9A2400B75756 /* ExerciseView-Model.swift */,
 				083607F629F42D4E00B75756 /* Days.swift */,
 				083607F429F42B1800B75756 /* Colors.swift */,
 				083607EA29F42AA900B75756 /* Assets.xcassets */,
@@ -184,12 +190,14 @@
 				0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */,
 				0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */,
 				083607FB29F47B7300B75756 /* ExcerciseView.swift in Sources */,
+				0836081529FD9E0E00B75756 /* DaysDataModel.xcdatamodeld in Sources */,
 				083607FD29F47E3800B75756 /* AddDayView.swift in Sources */,
 				083607F529F42B1800B75756 /* Colors.swift in Sources */,
 				0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */,
 				0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */,
 				083607F729F42D4E00B75756 /* Days.swift in Sources */,
 				083607E729F42AA600B75756 /* MuscleMateApp.swift in Sources */,
+				0836081229FD9A2400B75756 /* ExerciseView-Model.swift in Sources */,
 				0836080129F70B7400B75756 /* StartDayWorkout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +420,19 @@
 			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		0836081329FD9E0E00B75756 /* DaysDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0836081429FD9E0E00B75756 /* DaysDataModel.xcdatamodel */,
+			);
+			currentVersion = 0836081429FD9E0E00B75756 /* DaysDataModel.xcdatamodel */;
+			path = DaysDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 083607DB29F42AA600B75756 /* Project object */;
 }

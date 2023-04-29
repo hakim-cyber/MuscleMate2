@@ -8,25 +8,17 @@
 import SwiftUI
 
 struct ExcerciseView: View {
-    @Binding var muscle:Muscle
-    var change: (() -> Void)? = nil
+    @ObservedObject var model:ExerciseView_Model
     
-    @State var showadding =  false
-   
-    @State var pickedExcerciseTry = 0
-    @State var setsCount = 1
-    @State var repeatsCount = 1
-    
-    @State var exercisesForThisMuscle = [ExerciseApi]()
     var body: some View {
         VStack{
-            if showadding{
+            if model.showadding{
                 VStack{
                     HStack{
                         Spacer()
-                        Picker("Select an exercise", selection: $pickedExcerciseTry) {
-                            ForEach(exercisesForThisMuscle.indices, id: \.self) { index in
-                                Text(exercisesForThisMuscle[index].name.uppercased())
+                        Picker("Select an exercise", selection: $model.pickedExcerciseTry) {
+                            ForEach(model.exercisesForThisMuscle.indices, id: \.self) { index in
+                                Text(model.exercisesForThisMuscle[index].name.uppercased())
                             }
                         }
                         .pickerStyle(.menu)
@@ -38,7 +30,7 @@ struct ExcerciseView: View {
                     .padding()
                      
                     HStack{
-                        Picker("Sets",selection: $setsCount){
+                        Picker("Sets",selection: $model.setsCount){
                             ForEach(Array(2...5),id: \.self) { setCount in
                                 Text("\(setCount) sets")
                                     .foregroundColor(Color.openGreen)
@@ -48,7 +40,7 @@ struct ExcerciseView: View {
                         .foregroundColor(Color.openGreen)
                         Text("x")
                             .foregroundColor(Color.openGreen)
-                        Picker("Repeats",selection: $repeatsCount){
+                        Picker("Repeats",selection: $model.repeatsCount){
                             ForEach(Array(2...15),id: \.self) { setCount in
                                 Text("\(setCount) repeats")
                                     .foregroundColor(Color.openGreen)
@@ -65,16 +57,16 @@ struct ExcerciseView: View {
                 HStack{
                     Spacer()
                     Button("Add Excercise"){
-                        var excercise = exercisesForThisMuscle[pickedExcerciseTry]
-                        excercise.sets = setsCount
-                        excercise.repeatCount = repeatsCount
+                        var excercise = model.exercisesForThisMuscle[model.pickedExcerciseTry]
+                        excercise.sets = model.setsCount
+                        excercise.repeatCount = model.repeatsCount
                         withAnimation {
                    
-                            muscle.exercises.append(excercise)
+                            model.muscle.exercises.append(excercise)
                             
                         }
                        
-                        self.change?()
+                        model.change()
                     }
                     .foregroundColor(Color.openGreen)
                     Spacer()
@@ -84,9 +76,9 @@ struct ExcerciseView: View {
             }
             
             ScrollView{
-                ForEach(muscle.exercises){excersise in
+                ForEach(model.muscle.exercises){excersise in
                     HStack{
-                        let index = muscle.exercises.firstIndex(of:excersise)
+                        let index = model.muscle.exercises.firstIndex(of:excersise)
                         VStack{
                             Image(systemName: "\((index ?? 0) + 1).circle")
                                 .font(.headline)
@@ -94,7 +86,7 @@ struct ExcerciseView: View {
                                 .padding(4)
                             
                             Button(action: {
-                                remove(index: index!)
+                                model.remove(index: index!)
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
@@ -127,19 +119,19 @@ struct ExcerciseView: View {
                 }
                 .padding(40)
             }
-            .navigationTitle("\(muscle.muscle)")
+            .navigationTitle("\(model.muscle.muscle)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar{
                 
                 Button{
                     withAnimation {
-                        showadding.toggle()
+                        model.showadding.toggle()
                     }
                     
                     
                 }label:{
                     
-                    if showadding == false{
+                    if model.showadding == false{
                         Image(systemName: "plus.circle")
                     }else{
                         Image(systemName: "minus.circle")
@@ -150,32 +142,20 @@ struct ExcerciseView: View {
             }
         }
         .onAppear{
-            loadExercises()
+            model.loadExercises()
         }
         
     }
-    func remove(index:Int){
-        muscle.exercises.remove(at: index)
-        change?()
-    }
-    func loadExercises(){
-        let saveKeyExercises = "exercises"
-        
-        if let data = UserDefaults.standard.data(forKey: saveKeyExercises){
-            if let decoded = try? JSONDecoder().decode([ExerciseApi].self, from: data){
-                exercisesForThisMuscle = decoded.filter{$0.bodyPart == muscle.muscle.lowercased()}
-                
-            }
-        }
-    }
+   
    
 }
 
 struct ExcerciseView_Previews: PreviewProvider {
     @State  static var muscle = Muscle(muscle: "Chest", exercises: [ExerciseApi.defaultExercise])
     static var previews: some View {
+        let model = ExerciseView_Model(muscle:$muscle, change: {})
         NavigationView{
-            ExcerciseView(muscle:$muscle)
+            ExcerciseView(model: model)
                 .preferredColorScheme(.dark)
         }
     }

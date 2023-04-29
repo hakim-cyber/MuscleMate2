@@ -80,9 +80,9 @@ struct DayView: View {
                 
                 VStack(alignment: .leading){
                     ForEach(Array(viewModel.day.muscles.indices),id:\.self){index in
-                        NavigationLink(destination:ExcerciseView(muscle: $viewModel.day.muscles[index]){
-                            self.viewModel.change()
-                        }.preferredColorScheme(.dark) ){
+                        var model = ExerciseView_Model(muscle: $viewModel.day.muscles[index], change: { self.viewModel.change()})
+                        NavigationLink(destination:ExcerciseView(model: model)
+                        .preferredColorScheme(.dark) ){
                             HStack{
                                 Button(action: {
                                     viewModel.remove(index: index)
