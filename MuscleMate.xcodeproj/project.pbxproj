@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08149EF929FDCB7B008DA526 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08149EF829FDCB7B008DA526 /* ContentView-ViewModel.swift */; };
 		083607E729F42AA600B75756 /* MuscleMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607E629F42AA600B75756 /* MuscleMateApp.swift */; };
 		083607E929F42AA600B75756 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083607E829F42AA600B75756 /* ContentView.swift */; };
 		083607EB29F42AA900B75756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083607EA29F42AA900B75756 /* Assets.xcassets */; };
@@ -20,7 +21,6 @@
 		0836080529F9505A00B75756 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080429F9505A00B75756 /* AnimatedBackground.swift */; };
 		0836080729FB0A7400B75756 /* StructExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080629FB0A7300B75756 /* StructExercise.swift */; };
 		0836080A29FB2E3100B75756 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0836080929FB2E3100B75756 /* SDWebImageSwiftUI */; };
-		0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */; };
 		0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */; };
 		0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */; };
 		0836081229FD9A2400B75756 /* ExerciseView-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836081129FD9A2400B75756 /* ExerciseView-Model.swift */; };
@@ -35,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08149EF829FDCB7B008DA526 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 		083607E329F42AA600B75756 /* MuscleMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuscleMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		083607E629F42AA600B75756 /* MuscleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleMateApp.swift; sourceTree = "<group>"; };
 		083607E829F42AA600B75756 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		0836080029F70B7400B75756 /* StartDayWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayWorkout.swift; sourceTree = "<group>"; };
 		0836080429F9505A00B75756 /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
 		0836080629FB0A7300B75756 /* StructExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructExercise.swift; sourceTree = "<group>"; };
-		0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ContentView-ViewModel.swift"; path = "../../../../../../Applications/ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 		0836080D29FC5C5900B75756 /* DayView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayView-ViewModel.swift"; sourceTree = "<group>"; };
 		0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkButtonStyle.swift; sourceTree = "<group>"; };
 		0836081129FD9A2400B75756 /* ExerciseView-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseView-Model.swift"; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 			children = (
 				083607E629F42AA600B75756 /* MuscleMateApp.swift */,
 				083607E829F42AA600B75756 /* ContentView.swift */,
-				0836080B29FC557B00B75756 /* ContentView-ViewModel.swift */,
+				08149EF829FDCB7B008DA526 /* ContentView-ViewModel.swift */,
 				0836080F29FD15D500B75756 /* NavigationLinkButtonStyle.swift */,
 				083607FC29F47E3800B75756 /* AddDayView.swift */,
 				083607F829F4344500B75756 /* DayView.swift */,
@@ -212,13 +212,13 @@
 				0836081F29FDA95C00B75756 /* CashedMuscle+CoreDataProperties.swift in Sources */,
 				0836080E29FC5C5900B75756 /* DayView-ViewModel.swift in Sources */,
 				083607FB29F47B7300B75756 /* ExcerciseView.swift in Sources */,
+				08149EF929FDCB7B008DA526 /* ContentView-ViewModel.swift in Sources */,
 				0836082229FDA95C00B75756 /* CashedDay+CoreDataClass.swift in Sources */,
 				0836081529FD9E0E00B75756 /* DaysDataModel.xcdatamodeld in Sources */,
 				083607FD29F47E3800B75756 /* AddDayView.swift in Sources */,
 				0836081E29FDA95C00B75756 /* CashedMuscle+CoreDataClass.swift in Sources */,
 				083607F529F42B1800B75756 /* Colors.swift in Sources */,
 				0836081029FD15D500B75756 /* NavigationLinkButtonStyle.swift in Sources */,
-				0836080C29FC557B00B75756 /* ContentView-ViewModel.swift in Sources */,
 				0836082329FDA95C00B75756 /* CashedDay+CoreDataProperties.swift in Sources */,
 				0836082129FDA95C00B75756 /* CashedExcercise+CoreDataProperties.swift in Sources */,
 				083607F729F42D4E00B75756 /* Days.swift in Sources */,
