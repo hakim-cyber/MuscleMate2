@@ -10,10 +10,14 @@
         </uniquenessConstraints>
     </entity>
     <entity name="CashedExcercise" representedClassName="CashedExcercise" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="bodyPart" optional="YES" attributeType="String"/>
+        <attribute name="equipment" optional="YES" attributeType="String"/>
+        <attribute name="gifUrl" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="repeatsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="setsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="target" optional="YES" attributeType="String"/>
         <relationship name="muscle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CashedMuscle" inverseName="exercise" inverseEntity="CashedMuscle"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
