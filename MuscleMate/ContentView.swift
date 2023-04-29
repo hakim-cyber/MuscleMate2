@@ -26,6 +26,7 @@ struct ContentView: View {
                         var dayViewModel = DayView_viewModel(day: $viewModel.daysOfWeek[index],change: {
                             viewModel.save()
                             viewModel.load()
+                            
                         })
 
                         NavigationLink(destination:DayView(viewModel: dayViewModel).preferredColorScheme(.dark) ){
