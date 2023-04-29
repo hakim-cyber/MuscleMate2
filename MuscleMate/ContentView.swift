@@ -27,7 +27,7 @@ struct ContentView: View {
                         NavigationLink(destination:DayView(viewModel: dayViewModel).preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(viewModel.checkToday(day: viewModel.CheckWeekDay(day: viewModel.daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
-                                .frame(width: 350,height: 150)
+                                .frame(width: 380,height: 150)
                                 .overlay(
                                     VStack{
                                         Button(action: {
@@ -46,6 +46,7 @@ struct ContentView: View {
                                         if viewModel.checkIsMade(day: viewModel.daysOfWeek[index]){
                                             Image(systemName: "checkmark.seal.fill")
                                                 .padding(.vertical,10)
+                                                .foregroundColor(.blue)
                                         }else{
                                             Image(systemName: "xmark.seal.fill")
                                                 .foregroundColor(.red)
@@ -83,6 +84,7 @@ struct ContentView: View {
                                 
                                                                     
                         }
+                        .buttonStyle(NavigatinLinkButtonStyle())
                         
                     }
                     .onReceive(DailyTimer){_ in

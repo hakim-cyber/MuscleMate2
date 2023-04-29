@@ -93,7 +93,9 @@ struct DayView: View {
                                 .padding(.horizontal,5)
                                 RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.openGreen,lineWidth:7)
+                                    .shadow(color: Color.openGreen,radius: 20)
                                     .frame(width: 350,height: 130)
+                              
                                 
                                 
                                     .overlay(
@@ -126,7 +128,9 @@ struct DayView: View {
                                     )
                             }
                         }
+                        .buttonStyle(NavigatinLinkButtonStyle())
                         .padding(5)
+                        
                     }
                 }
                 .padding(40)
@@ -142,7 +146,7 @@ struct DayView: View {
                     Text("~\(viewModel.estimatedTimeForWorkout / 60) mins")
                         .foregroundColor(.gray)
                     Button{
-                        withAnimation{
+                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.6)){
                             viewModel.ShowStartWorkout = true
                         }
                     }label:{
@@ -158,7 +162,7 @@ struct DayView: View {
                 .padding()
                
                 Button{
-                    withAnimation {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.6)) {
                         viewModel.showadding.toggle()
                     }
                    
