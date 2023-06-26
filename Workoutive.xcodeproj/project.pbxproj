@@ -36,7 +36,7 @@
 
 /* Begin PBXFileReference section */
 		08149EF829FDCB7B008DA526 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
-		083607E329F42AA600B75756 /* MuscleMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuscleMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		083607E329F42AA600B75756 /* Workoutive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workoutive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		083607E629F42AA600B75756 /* MuscleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleMateApp.swift; sourceTree = "<group>"; };
 		083607E829F42AA600B75756 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		083607EA29F42AA900B75756 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		083607E429F42AA600B75756 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				083607E329F42AA600B75756 /* MuscleMate.app */,
+				083607E329F42AA600B75756 /* Workoutive.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,9 +132,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		083607E229F42AA600B75756 /* MuscleMate */ = {
+		083607E229F42AA600B75756 /* Workoutive */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 083607F129F42AA900B75756 /* Build configuration list for PBXNativeTarget "MuscleMate" */;
+			buildConfigurationList = 083607F129F42AA900B75756 /* Build configuration list for PBXNativeTarget "Workoutive" */;
 			buildPhases = (
 				083607DF29F42AA600B75756 /* Sources */,
 				083607E029F42AA600B75756 /* Frameworks */,
@@ -144,12 +144,12 @@
 			);
 			dependencies = (
 			);
-			name = MuscleMate;
+			name = Workoutive;
 			packageProductDependencies = (
 				0836080929FB2E3100B75756 /* SDWebImageSwiftUI */,
 			);
 			productName = MuscleMate;
-			productReference = 083607E329F42AA600B75756 /* MuscleMate.app */;
+			productReference = 083607E329F42AA600B75756 /* Workoutive.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -167,7 +167,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 083607DE29F42AA600B75756 /* Build configuration list for PBXProject "MuscleMate" */;
+			buildConfigurationList = 083607DE29F42AA600B75756 /* Build configuration list for PBXProject "Workoutive" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -183,7 +183,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				083607E229F42AA600B75756 /* MuscleMate */,
+				083607E229F42AA600B75756 /* Workoutive */,
 			);
 		};
 /* End PBXProject section */
@@ -416,7 +416,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		083607DE29F42AA600B75756 /* Build configuration list for PBXProject "MuscleMate" */ = {
+		083607DE29F42AA600B75756 /* Build configuration list for PBXProject "Workoutive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				083607EF29F42AA900B75756 /* Debug */,
@@ -425,7 +425,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		083607F129F42AA900B75756 /* Build configuration list for PBXNativeTarget "MuscleMate" */ = {
+		083607F129F42AA900B75756 /* Build configuration list for PBXNativeTarget "Workoutive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				083607F229F42AA900B75756 /* Debug */,
