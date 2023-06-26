@@ -55,8 +55,7 @@ struct DayView: View {
                             }
                             self.viewModel.change()
                             
-                            let newAvailible =   viewModel.availibleMuscles.filter{$0 != viewModel.pickedMuscle}
-                            viewModel.availibleMuscles = newAvailible
+                            viewModel.newAvailible()
                             
                         }
                         Spacer()
@@ -67,9 +66,9 @@ struct DayView: View {
                         }
                     }
                 }else{
-                    Text("All availible muscles used")
+                    Text("all availible muscles used")
                         .font(.largeTitle)
-                        .foregroundColor(Color.openGreen)
+                        .foregroundColor(Color.gray)
                 }
             }
                

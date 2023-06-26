@@ -33,6 +33,8 @@ class DayView_viewModel:ObservableObject {
     init(day: Binding<Day>, change: @escaping () -> Void)  {
         self._day = day
         self.change = change
+        
+        newAvailible()
     }
     
     func save(){
