@@ -17,6 +17,8 @@ struct ContentView: View {
     
     let DailyTimer = Timer.publish(every: 86400, on: .current, in: .common).autoconnect()
     let weeklyTimer = Timer.publish(every: 86400 * 7, on: .current, in: .common).autoconnect()
+    
+    @State private var screen = UIScreen.main.bounds
 
     
     var body: some View {
@@ -33,7 +35,7 @@ struct ContentView: View {
                         NavigationLink(destination:DayView(viewModel: dayViewModel).preferredColorScheme(.dark) ){
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(viewModel.checkToday(day: viewModel.CheckWeekDay(day: viewModel.daysOfWeek[index])) ? Color.underlinedGreen : Color.openGreen)
-                                .frame(width: 380,height: 150)
+                                .frame(width: screen.width / 1.1,height: screen.height / 5.5)
                                 .overlay(
                                     VStack{
                                         Button(action: {

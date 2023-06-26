@@ -18,7 +18,7 @@ struct StartDayWorkout: View {
     @State var timeRemainingRest = 150
     @State var startRest = false
     @State var setsCountRemaining = 4
-    
+    @State private var screen = UIScreen.main.bounds
     var body: some View {
         NavigationView{
             ZStack{
@@ -55,7 +55,7 @@ struct StartDayWorkout: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .offset(x:0,y: 200)
+                    .offset(x:0,y: 150)
       
                   Spacer()
                   
@@ -85,7 +85,7 @@ struct StartDayWorkout: View {
                                             VStack(spacing: 50){
                                                 RoundedRectangle(cornerRadius: 15)
                                                       .fill(Color.openGreen)
-                                                      .frame(width: 350,height:80)
+                                                      .frame(width: screen.width / 1.15,height: screen.height / 9)
                                                       .shadow(color: Color.openGreen,radius: 15)
                                                       .overlay(
                                                           HStack{
@@ -130,7 +130,8 @@ struct StartDayWorkout: View {
                                                                 .clipShape(Circle())
                                                                 .font(.system(size: 80))
                                                                 .padding()
-                                                                .shadow(color: Color.openGreen,radius: 20)
+                                                                .padding(.bottom)
+                                                               
                                                         
                                                         
                                                     }else{
@@ -140,7 +141,7 @@ struct StartDayWorkout: View {
                                                             .clipShape(Circle())
                                                             .font(.system(size: 80))
                                                             .padding()
-                                                            .shadow(color: Color.openGreen,radius: 20)
+                                                            .padding(.bottom)
                                                        
                                                         
                                                         
@@ -170,6 +171,7 @@ struct StartDayWorkout: View {
                                     startRest = false
                                 }
                             }
+                          
                         }else{
                             Button("Start Again"){
                                 withAnimation {
@@ -180,18 +182,18 @@ struct StartDayWorkout: View {
                             }
                             .padding()
                         }
+                           
                         
                     }
-                    .frame(width: 390,height: 350)
                     .background(Color.black)
                     .background(Color.openGreen)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    .shadow(color: Color.black,radius: 30)
+                    .roundedCorner(25, corners: [.topLeft,.topRight])
+                    .frame(width: screen.width / 1,height: screen.height / 2.4)
                    
-                
-                 
+                  
                    
                 }
+                .ignoresSafeArea()
                 .onAppear{
                     if (!allExcercises.isEmpty){
                         setsCountRemaining = allExcercises[excercisesIndex].sets!
@@ -204,6 +206,7 @@ struct StartDayWorkout: View {
                 }
                 
             }
+            .ignoresSafeArea()
             .navigationBarTitle(Text("\(day.muscles.isEmpty ? "No muscle" : day.muscles[muscleWorkingNowIndex].muscle.uppercased())"))
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
@@ -229,8 +232,10 @@ struct StartDayWorkout: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .ignoresSafeArea()
             
         }
+        .ignoresSafeArea()
        
     }
     var estimatedTimeForWorkout:Int{

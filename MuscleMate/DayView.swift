@@ -22,7 +22,7 @@ import SwiftUI
 struct DayView: View {
     @ObservedObject var viewModel:DayView_viewModel
    
-    
+    @State private var screen = UIScreen.main.bounds
    
     var body: some View {
         VStack{
@@ -93,7 +93,7 @@ struct DayView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.openGreen,lineWidth:7)
                                     .shadow(color: Color.openGreen,radius: 20)
-                                    .frame(width: 350,height: 130)
+                                    
                               
                                 
                                 
@@ -126,6 +126,7 @@ struct DayView: View {
                                         
                                     )
                             }
+                            .frame(width: screen.width / 1.1,height: screen.height / 6)
                         }
                         .buttonStyle(NavigatinLinkButtonStyle())
                         .padding(5)

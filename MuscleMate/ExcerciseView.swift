@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExcerciseView: View {
     @ObservedObject var model:ExerciseView_Model
-    
+    @State private var screen = UIScreen.main.bounds
     var body: some View {
         VStack{
             if model.showadding{
@@ -96,7 +96,7 @@ struct ExcerciseView: View {
                         
                         RoundedRectangle(cornerRadius: 15)
                             .stroke(Color.openGreen,lineWidth:7)
-                            .frame(width: 350,height: 100)
+                          
                             .overlay(
                                 HStack{
                                     Text("\(excersise.name.uppercased())")
@@ -115,7 +115,9 @@ struct ExcerciseView: View {
                                 }
                             )
                     }
+                    .frame(width: screen.width / 1.1,height: screen.height / 7.5)
                     .padding(5)
+                   
                 }
                 .padding(40)
             }
