@@ -275,12 +275,20 @@ struct StartDayWorkout: View {
     func nextExcercise(){
         let countOfExcercises = allExcercises.count
       
-        setsCountRemaining -= 1
        
-            if (countOfExcercises - 1) != excercisesIndex{
+        
+        print("before index \(excercisesIndex)")
+       
+            if (countOfExcercises) != excercisesIndex{
+                setsCountRemaining -= 1
                 if setsCountRemaining == 0 {
                     if !showEnd{
-                        excercisesIndex += 1
+                        if (countOfExcercises) != excercisesIndex + 1{
+                            excercisesIndex += 1
+                        }else{
+                            showEnd = true
+                            checkAsMade()
+                        }
                     }
                 }
                 
@@ -289,7 +297,7 @@ struct StartDayWorkout: View {
                 showEnd = true
                 checkAsMade()
             }
-        
+        print("After index \(excercisesIndex)")
     }
     var excercisesRemaining:Int{
         let all = allExcercises.count
